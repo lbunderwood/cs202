@@ -34,5 +34,4 @@ void inputError()
 {
 	std::cout << "Invalid arguments. Please enter ftoc or ctof to choose"
 		<< " your conversion, followed by the temperature to convert.";
-	throw;
 }

@@ -16,6 +16,7 @@ int main(int argc, char** argv)
 	if (argc != 3)
 	{
 		inputError();
+		return 0;
 	}
 	else
 	{
@@ -34,6 +35,7 @@ int main(int argc, char** argv)
 	else
 	{
 		inputError();
+		return 0;
 	}
 
 
