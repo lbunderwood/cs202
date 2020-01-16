@@ -37,6 +37,4 @@ int main(int argc, char** argv)
 		inputError();
 		return 0;
 	}
-
-
 }
