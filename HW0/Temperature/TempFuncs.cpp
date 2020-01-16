@@ -6,6 +6,7 @@
 
 #include"TempHead.h"
 #include<cstdlib>
+#include<iostream>
 
 double c_ftoc(const char* f)
 {
@@ -27,4 +28,11 @@ double c_ctof(const char* c)
 	}
 	double cNum = strtod(c, &end);
 	return (cNum * (9.0 / 5.0)) + 32.0;
+}
+
+void inputError()
+{
+	std::cout << "Invalid arguments. Please enter ftoc or ctof to choose"
+		<< " your conversion, followed by the temperature to convert.";
+	throw;
 }

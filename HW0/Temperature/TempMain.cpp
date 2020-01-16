@@ -12,13 +12,10 @@ int main(int argc, char** argv)
 
 	const char* conversion;
 	const char* inTemp;
-	double outTemp;
 
 	if (argc != 3)
 	{
-		std::cout << "Invalid arguments. Please enter ftoc or ctof to choose"
-			<< " your conversion, followed by the temperature to convert.";
-		throw;
+		inputError();
 	}
 	else
 	{
@@ -26,13 +23,17 @@ int main(int argc, char** argv)
 		inTemp = argv[2];
 	}
 
-	if (conversion == "ftoc")
+	if (!strcmp(conversion, "ftoc"))
 	{
 		std::cout << inTemp << " F = " << c_ftoc(inTemp) << " C";
 	} 
-	else if (conversion == "ctof")
+	else if (!strcmp(conversion, "ctof"))
 	{
 		std::cout << inTemp << " C = " << c_ctof(inTemp) << " F";
+	}
+	else
+	{
+		inputError();
 	}
 
 

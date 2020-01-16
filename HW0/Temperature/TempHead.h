@@ -11,4 +11,6 @@ double c_ftoc(const char* f);
 
 double c_ctof(const char* c);
 
+void inputError();
+
 #endif
