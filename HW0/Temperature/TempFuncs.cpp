@@ -15,7 +15,7 @@ double c_ftoc(const char* f)
 		end++;
 	}
 	double fNum = strtod(f, &end);
-	return (fNum - 32) * (5 / 9);
+	return (fNum - 32.0) * (5.0 / 9.0);
 }
 
 double c_ctof(const char* c)
@@ -26,5 +26,5 @@ double c_ctof(const char* c)
 		end++;
 	}
 	double cNum = strtod(c, &end);
-	return (cNum - 32) * (5 / 9);
+	return (cNum * (9.0 / 5.0)) + 32.0;
 }
