@@ -7,8 +7,8 @@
 #ifndef TEMPHEAD.H
 #define TEMPHEAD.H
 
-double ftoc(double f);
+double c_ftoc(const char* f);
 
-double ctof(double c);
+double c_ctof(const char* c);
 
 #endif
