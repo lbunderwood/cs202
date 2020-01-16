@@ -4,8 +4,8 @@
 // Temperature
 // TempHead.h
 
-#ifndef TEMPHEAD.H
-#define TEMPHEAD.H
+#ifndef TEMPHEAD_H
+#define TEMPHEAD_H
 
 double c_ftoc(const char* f);
 
