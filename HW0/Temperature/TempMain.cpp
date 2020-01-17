@@ -21,6 +21,22 @@ int main(int argc, char** argv)
 	else
 	{
 		conversion = argv[1];
+
+		if (argv[2][0] == '-')
+		{
+			if (argv[2][1] > '9' || argv[2][1] < '0')
+			{
+
+				inputError();
+				return 0;
+			}
+		}
+		else if (argv[2][0] > '9' || argv[2][0] < '0')
+		{
+			inputError();
+			return 0;
+		}
+
 		inTemp = argv[2];
 	}
 
