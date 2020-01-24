@@ -18,7 +18,7 @@ public:
 
 	Timer(time_point<system_clock> start);
 
-	~Timer();
+	~Timer() {}
 
 	void start();
 

@@ -5,7 +5,10 @@
 
 #include "Timer.h"
 
-Timer::Timer() : duration_(0) {}
+Timer::Timer() : duration_(0) 
+{
+	startTimepoint_ = system_clock::now();
+}
 
 Timer::Timer(const Timer& old) : duration_(0)
 {
@@ -16,8 +19,6 @@ Timer::Timer(time_point<system_clock> start) : duration_(0)
 {
 	startTimepoint_ = start;
 }
-
-Timer::~Timer() {}
 
 void Timer::start()
 {
