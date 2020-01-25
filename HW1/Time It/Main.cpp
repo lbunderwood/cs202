@@ -8,6 +8,7 @@
 #include<string>
 #include<random>
 #include<algorithm>
+#include<iomanip>
 
 #include"Timer.h"
 
@@ -60,6 +61,7 @@ int main(int argc, char** argv)
 
 	//This is our set
 	std::vector<double> set;
+	set.reserve(elements);
 
 	//This timer will record how long our set took to create
 	Timer setCreation;
@@ -124,20 +126,23 @@ int main(int argc, char** argv)
 	//Print the results
 	std::cout << "The Results are in!\n"
 
-		<< "\tSet Creation took : " << setCreation.getDuration()
-		<< " Seconds.\n"
+		<< std::setw(30) << "Set Creation took : " 
+		<< std::setw(10) << setCreation.getDuration() << " Seconds.\n"
 
-		<< "\tSearch took : " << searchTime.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "Search took : " 
+		<< std::setw(10) << searchTime.getDuration() << " Seconds.\n"
 
-		<< "\tBinary Search took : " << bSearchTime.getDuration()
-		<< " Seconds.\n"
+		<< std::setw(30) << "Binary Search took : " 
+		<< std::setw(10) << bSearchTime.getDuration() << " Seconds.\n"
 
-		<< "\tSort took : " << sortTime.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "Sort took : " 
+		<< std::setw(10) << sortTime.getDuration() << " Seconds.\n"
 
-		<< "\tChecking the sort took : " << checkTime.getDuration()
-		<< " Seconds.\n";
+		<< std::setw(30) << "Checking the sort took : " 
+		<< std::setw(10) << checkTime.getDuration() << " Seconds.\n";
 
 	totalTime.end();
 
-	std::cout << "\tTotal time : " << totalTime.getDuration() << " Seconds.\n";
+	std::cout << std::setw(30) << "Total time : " 
+		<< std::setw(10) << totalTime.getDuration() << " Seconds.\n";
 }
