@@ -60,6 +60,8 @@ int main()
 	//Create a timer to record the full process
 	Timer totalTime;
 
+	/////////////////////  READ  ///////////////////
+
 	//Set up to read files
 	std::fstream modest("A_Modest_Proposal.txt");
 	std::fstream beo("Beowulf.txt");
@@ -99,6 +101,8 @@ int main()
 	readToStr(bookString, monte);
 	createStringTime.end();
 	std::cout << "Books Read to String!";
+
+	///////////////////  SEARCH  //////////////////////
 
 	//Set up random number generator to create a target index
 	//of an element that our search algorithm will look for
@@ -140,55 +144,57 @@ int main()
 	if (strSearchResult == bookString.end()) algErr();
 	else std::cout << "String Search Complete!\n";
 
+	///////////////////  SORT  //////////////////////
 
+	//Time sorting the vector
+	Timer sortVecTime;
+	std::sort(bookVec.begin(), bookVec.end());
+	sortVecTime.end();
+	std::cout << "Sort Vector Complete!\n";
 
-	//Time sorting the set
-	Timer sortTime;
-	std::sort(set.begin(), set.end());
-	sortTime.end();
+	//Time sorting the list
+	Timer sortListTime;
+	std::sort(bookList.begin(), bookList.end());
+	sortListTime.end();
+	std::cout << "Sort List Complete!\n";
 
-	std::cout << "Sort Complete!\n";
-
-	//Time checking the sort
-	bool sorted = false;
-	Timer checkTime;
-	sorted = std::is_sorted(set.begin(), set.end());
-	checkTime.end();
-
-	//Print error if not sorted
-	if (!sorted) algErr();
-	else std::cout << "Sort Check Complete!\n";
-
-	//Set up for binary search
-	bool found = false;
-	double btarget = set[targetIndex];
-
-	//Time binary search
-	Timer bSearchTime;
-	found = std::binary_search(set.begin(), set.end(), btarget);
-	bSearchTime.end();
-
-	//Check that it worked
-	if (!found) algErr();
-	else std::cout << "Binary Search Complete!\n";
+	//Time sorting the list
+	Timer sortStringTime;
+	std::sort(bookString.begin(), bookString.end());
+	sortStringTime.end();
+	std::cout << "Sort String Complete!\n";
+	
+	////////////////  RESULTS  /////////////////////
 
 	//Print the results
 	std::cout << "The Results are in!\n"
 
-		<< std::setw(30) << "Set Creation took : " 
-		<< std::setw(10) << setCreation.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "Vector Creation took : "
+		<< std::setw(10) << createVecTime.getDuration() << " Seconds.\n"
 
-		<< std::setw(30) << "Search took : " 
-		<< std::setw(10) << searchTime.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "List Creation took : "
+		<< std::setw(10) << createListTime.getDuration() << " Seconds.\n"
 
-		<< std::setw(30) << "Binary Search took : " 
-		<< std::setw(10) << bSearchTime.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "String Creation took : "
+		<< std::setw(10) << createStringTime.getDuration() << " Seconds.\n"
 
-		<< std::setw(30) << "Sort took : " 
-		<< std::setw(10) << sortTime.getDuration() << " Seconds.\n"
+		<< std::setw(30) << "Vector Search took : "
+		<< std::setw(10) << searchVecTime.getDuration() << " Seconds.\n"
 
-		<< std::setw(30) << "Checking the sort took : " 
-		<< std::setw(10) << checkTime.getDuration() << " Seconds.\n";
+		<< std::setw(30) << "List Search took : "
+		<< std::setw(10) << searchListTime.getDuration() << " Seconds.\n"
+
+		<< std::setw(30) << "String Search took : "
+		<< std::setw(10) << searchStrTime.getDuration() << " Seconds.\n"
+
+		<< std::setw(30) << "Vector Sort took : "
+		<< std::setw(10) << sortVecTime.getDuration() << " Seconds.\n"
+
+		<< std::setw(30) << "List Sort took : "
+		<< std::setw(10) << sortListTime.getDuration() << " Seconds.\n"
+
+		<< std::setw(30) << "String Sort took : "
+		<< std::setw(10) << sortStringTime.getDuration() << " Seconds.\n";
 
 	totalTime.end();
 
