@@ -78,6 +78,7 @@ int main()
 	readToVec(bookVec, fStein);
 	readToVec(bookVec, monte);
 	createVecTime.end();
+	std::cout << "Books Read to Vector!";
 
 	//Time reading into a list
 	Timer createListTime;
@@ -87,6 +88,7 @@ int main()
 	readToList(bookList, fStein);
 	readToList(bookList, monte);
 	createListTime.end();
+	std::cout << "Books Read to List!";
 
 	//Time reading into a string
 	Timer createStringTime;
@@ -96,6 +98,7 @@ int main()
 	readToStr(bookString, fStein);
 	readToStr(bookString, monte);
 	createStringTime.end();
+	std::cout << "Books Read to String!";
 
 	//Set up random number generator to create a target index
 	//of an element that our search algorithm will look for
@@ -106,16 +109,36 @@ int main()
 
 	//set up for search algorithm
 	std::string target = bookVec[targetIndex];
-	std::vector<std::string>::iterator searchResult = bookVec.end();
+	std::vector<std::string>::iterator vecSearchResult = bookVec.end();
+	std::list<std::string>::iterator listSearchResult = bookList.end();
+	std::string::iterator strSearchResult = bookString.end();
 
 	//Time the search algorithm on the vector
 	Timer searchVecTime;
-	searchResult = std::search(bookVec.begin(), bookVec.end(), target.begin(), target.end());
+	vecSearchResult = std::search(bookVec.begin(), bookVec.end(), target.begin(), target.end());
 	searchVecTime.end();
 
 	//Check to make sure it worked
-	if (searchResult == bookVec.end()) algErr();
-	else std::cout << "Search Complete!\n";
+	if (vecSearchResult == bookVec.end()) algErr();
+	else std::cout << "Vector Search Complete!\n";
+
+	//Time the search algorithm on the list
+	Timer searchListTime;
+	listSearchResult = std::search(bookList.begin(), bookList.end(), target.begin(), target.end());
+	searchListTime.end();
+
+	//Check to make sure it worked
+	if (listSearchResult == bookList.end()) algErr();
+	else std::cout << "List Search Complete!\n";
+
+	//Time the search algorithm on the vector
+	Timer searchStrTime;
+	strSearchResult = std::search(bookString.begin(), bookString.end(), target.begin(), target.end());
+	searchStrTime.end();
+
+	//Check to make sure it worked
+	if (strSearchResult == bookString.end()) algErr();
+	else std::cout << "String Search Complete!\n";
 
 
 
