@@ -6,19 +6,14 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<deque>
+#include<list>
 #include<random>
 #include<algorithm>
 #include<iomanip>
+#include<fstream>
 
 #include"Timer.h"
-
-//prints an error message for bad arguments. Always followed by a return 0
-void inputErr()
-{
-	std::cout << "ERROR: BAD INPUT. Please enter a single argument that is the"
-		<< " number of elements you wish to have in the vector the algorithms"
-		<< " are being tested on. This must be a positive integer.";
-}
 
 //prints an error message for a failed algorithm
 void algErr()
@@ -27,71 +22,102 @@ void algErr()
 		<< "are the result of a faulty execution. Simply try again.";
 }
 
+//reads the entire file into a vector
+void readToVec(std::vector<std::string>& vec, std::fstream& fin)
+{
+	std::string line;
+	while (!fin.eof())
+	{
+		std::getline(fin, line);
+		vec.push_back(line);
+	}
+}
 
-int main(int argc, char** argv)
+//reads the entire file into a list
+void readToList(std::list<std::string>& list, std::fstream& fin)
+{
+	std::string line;
+	while (!fin.eof())
+	{
+		std::getline(fin, line);
+		list.push_back(line);
+	}
+}
+
+//reads the entire file into a vector
+void readToStr(std::string& string, std::fstream& fin)
+{
+	std::string line;
+	while (!fin.eof())
+	{
+		std::getline(fin, line);
+		string += line;
+	}
+}
+
+int main()
 {
 	//Create a timer to record the full process
 	Timer totalTime;
 
-	//Take a command line argument and store it as int elements to determine
-	//set size. Plus error handling.
-	int elements;
-	if (argc == 2)
-	{
-		elements = std::stoi(argv[1]);
-		if (elements <= 0)
-		{
-			inputErr();
-			return 0;
-		}
-	}
-	else
-	{
-		inputErr();
-		return 0;
-	}
+	//Set up to read files
+	std::fstream modest("A_Modest_Proposal.txt");
+	std::fstream beo("Beowulf.txt");
+	std::fstream dracula("Dracula.txt");
+	std::fstream fStein("Frankenstein.txt");
+	std::fstream monte("Monte_Cristo.txt");
+	std::vector<std::string> bookVec;
+	std::list<std::string> bookList;
+	std::string bookString;
 
-	//Set up random number generator to create our test set, and a target index
-	//of an element that our search algorithms will look for
+	//Time reading books into vector
+	Timer createVecTime;
+	readToVec(bookVec, modest);
+	readToVec(bookVec, beo);
+	readToVec(bookVec, dracula);
+	readToVec(bookVec, fStein);
+	readToVec(bookVec, monte);
+	createVecTime.end();
+
+	//Time reading into a list
+	Timer createListTime;
+	readToList(bookList, modest);
+	readToList(bookList, beo);
+	readToList(bookList, dracula);
+	readToList(bookList, fStein);
+	readToList(bookList, monte);
+	createListTime.end();
+
+	//Time reading into a string
+	Timer createStringTime;
+	readToStr(bookString, modest);
+	readToStr(bookString, beo);
+	readToStr(bookString, dracula);
+	readToStr(bookString, fStein);
+	readToStr(bookString, monte);
+	createStringTime.end();
+
+	//Set up random number generator to create a target index
+	//of an element that our search algorithm will look for
 	std::random_device r;
 	std::mt19937 gen(r());
-	std::uniform_real_distribution<> dist(0, 100);
-	std::uniform_int_distribution<> dist2(0, elements-2);
-	int targetIndex = dist2(gen);
-
-	//This is our set
-	std::vector<double> set;
-	set.reserve(elements);
-
-	//This timer will record how long our set took to create
-	Timer setCreation;
-
-	//create the set
-	for (int i = 0; i < elements; i++)
-	{
-		set.push_back(dist(gen));
-	}
-
-	//set is created, so stop the timer!
-	setCreation.end();
-	std::cout << "Set Created!\n";
+	std::uniform_int_distribution<> dist(0, bookVec.size());
+	int targetIndex = dist(gen);
 
 	//set up for search algorithm
-	std::vector<double> target;
-	for (int i = 0; i < 2; i++)
-	{
-		target.push_back(set[targetIndex + i]);
-	}
-	std::vector<double>::iterator searchResult = set.end();
+	std::string target = bookVec[targetIndex];
+	std::vector<std::string>::iterator searchResult = bookVec.end();
 
-	//Time the search algorithm
-	Timer searchTime;
-	searchResult = std::search(set.begin(), set.end(), target.begin(), target.end());
-	searchTime.end();
+	//Time the search algorithm on the vector
+	Timer searchVecTime;
+	searchResult = std::search(bookVec.begin(), bookVec.end(), target.begin(), target.end());
+	searchVecTime.end();
 
 	//Check to make sure it worked
-	if (searchResult == set.end()) algErr();
+	if (searchResult == bookVec.end()) algErr();
 	else std::cout << "Search Complete!\n";
+
+
 
 	//Time sorting the set
 	Timer sortTime;

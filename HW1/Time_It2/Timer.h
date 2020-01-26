@@ -12,6 +12,7 @@ using namespace std::chrono;
 class Timer
 {
 public:
+
 	Timer();
 
 	Timer(const Timer& old);
