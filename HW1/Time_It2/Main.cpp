@@ -55,6 +55,12 @@ void readToStr(std::string& string, std::fstream& fin)
 	}
 }
 
+void reset(std::fstream& fin)
+{
+	fin.clear();
+	fin.seekg(0, fin.beg);
+}
+
 int main()
 {
 	//Create a timer to record the full process
@@ -80,7 +86,14 @@ int main()
 	readToVec(bookVec, fStein);
 	readToVec(bookVec, monte);
 	createVecTime.end();
-	std::cout << "Books Read to Vector!";
+	std::cout << "Books Read to Vector!\n";
+
+	//Reset the fstreams
+	reset(modest);
+	reset(beo);
+	reset(dracula);
+	reset(fStein);
+	reset(monte);
 
 	//Time reading into a list
 	Timer createListTime;
@@ -90,7 +103,14 @@ int main()
 	readToList(bookList, fStein);
 	readToList(bookList, monte);
 	createListTime.end();
-	std::cout << "Books Read to List!";
+	std::cout << "Books Read to List!\n";
+
+	//Reset the fstreams
+	reset(modest);
+	reset(beo);
+	reset(dracula);
+	reset(fStein);
+	reset(monte);
 
 	//Time reading into a string
 	Timer createStringTime;
@@ -100,65 +120,73 @@ int main()
 	readToStr(bookString, fStein);
 	readToStr(bookString, monte);
 	createStringTime.end();
-	std::cout << "Books Read to String!";
+	std::cout << "Books Read to String!\n";
 
 	///////////////////  SEARCH  //////////////////////
-
+	
 	//Set up random number generator to create a target index
 	//of an element that our search algorithm will look for
 	std::random_device r;
 	std::mt19937 gen(r());
-	std::uniform_int_distribution<> dist(0, bookVec.size());
+	std::uniform_int_distribution<> dist(0, bookVec.size() - 4);
 	int targetIndex = dist(gen);
 
 	//set up for search algorithm
-	std::string target = bookVec[targetIndex];
+	std::vector<std::string>::iterator vecTarget = bookVec.begin() + targetIndex;
+
+	std::list<std::string>::iterator listTargetStart = bookList.begin();
+	std::advance(listTargetStart, targetIndex);
+	std::list<std::string>::iterator listTargetEnd = listTargetStart;
+	std::advance(listTargetEnd, 2);
+
+	std::string::iterator strTarget = bookString.begin() + targetIndex;
+
 	std::vector<std::string>::iterator vecSearchResult = bookVec.end();
 	std::list<std::string>::iterator listSearchResult = bookList.end();
 	std::string::iterator strSearchResult = bookString.end();
 
 	//Time the search algorithm on the vector
 	Timer searchVecTime;
-	vecSearchResult = std::search(bookVec.begin(), bookVec.end(), target.begin(), target.end());
+	vecSearchResult = std::search(bookVec.begin(), bookVec.end(), vecTarget, vecTarget + 2);
 	searchVecTime.end();
 
 	//Check to make sure it worked
 	if (vecSearchResult == bookVec.end()) algErr();
 	else std::cout << "Vector Search Complete!\n";
-
+	
 	//Time the search algorithm on the list
 	Timer searchListTime;
-	listSearchResult = std::search(bookList.begin(), bookList.end(), target.begin(), target.end());
+	listSearchResult = std::search(bookList.begin(), bookList.end(), listTargetStart, listTargetEnd);
 	searchListTime.end();
 
 	//Check to make sure it worked
 	if (listSearchResult == bookList.end()) algErr();
 	else std::cout << "List Search Complete!\n";
-
+	
 	//Time the search algorithm on the vector
 	Timer searchStrTime;
-	strSearchResult = std::search(bookString.begin(), bookString.end(), target.begin(), target.end());
+	strSearchResult = std::search(bookString.begin(), bookString.end(), strTarget, strTarget + 2);
 	searchStrTime.end();
 
 	//Check to make sure it worked
 	if (strSearchResult == bookString.end()) algErr();
 	else std::cout << "String Search Complete!\n";
-
+	
 	///////////////////  SORT  //////////////////////
-
+	
 	//Time sorting the vector
 	Timer sortVecTime;
 	std::sort(bookVec.begin(), bookVec.end());
 	sortVecTime.end();
 	std::cout << "Sort Vector Complete!\n";
-
+	
 	//Time sorting the list
 	Timer sortListTime;
-	std::sort(bookList.begin(), bookList.end());
+	bookList.sort();
 	sortListTime.end();
 	std::cout << "Sort List Complete!\n";
-
-	//Time sorting the list
+	
+	//Time sorting the string
 	Timer sortStringTime;
 	std::sort(bookString.begin(), bookString.end());
 	sortStringTime.end();
@@ -186,16 +214,16 @@ int main()
 
 		<< std::setw(30) << "String Search took : "
 		<< std::setw(10) << searchStrTime.getDuration() << " Seconds.\n"
-
+		
 		<< std::setw(30) << "Vector Sort took : "
 		<< std::setw(10) << sortVecTime.getDuration() << " Seconds.\n"
-
+		
 		<< std::setw(30) << "List Sort took : "
 		<< std::setw(10) << sortListTime.getDuration() << " Seconds.\n"
-
+		
 		<< std::setw(30) << "String Sort took : "
 		<< std::setw(10) << sortStringTime.getDuration() << " Seconds.\n";
-
+		
 	totalTime.end();
 
 	std::cout << std::setw(30) << "Total time : " 
