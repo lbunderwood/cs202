@@ -4,8 +4,13 @@
 // Spelunking
 // Cave.h
 
+#ifndef CAVE_H
+#define CAVE_H
+
 #include<fstream>
 #include<vector>
+#include<random>
+#include<string>
 
 class Cave
 {
@@ -46,11 +51,11 @@ private:
 		std::string longDesc_;
 		std::vector<int> adjacentRooms_;
 	
-		Room();
+		Room(int roomNum);
 	};
-	
+
 	int currentRoom_ = 0;
 	std::vector<Room> caveRooms_;
 };
 
-
+#endif CAVE_H
