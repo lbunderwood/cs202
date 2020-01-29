@@ -21,7 +21,10 @@ public:
 	
 	//Returns current room's number
 	int getCurrentRoom();
-	
+
+	//get adjacent room numbers given a particular room number
+	std::vector<int> getAdjacent(int room);
+
 	//Changes position
 	void goToRoom(int room);
 	
@@ -42,7 +45,7 @@ public:
 	
 	//read rooms from an input stream
 	void readRooms(std::istream & is);
-	
+
 private:
 	struct Room
 	{

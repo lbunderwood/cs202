@@ -14,7 +14,7 @@ Cave::Cave()
 	std::fstream fin("Caves.txt");
 	std::string line;
 	
-	fin >> line;
+	std::getline(fin, line);
 
 	if (line == "Full Cave System:")
 	{
@@ -125,6 +125,12 @@ Cave::Room::Room(int roomNum) : roomNumber_(roomNum) {}
 int Cave::getCurrentRoom()
 {
 	return currentRoom_;
+}
+
+//get adjacent room numbers given a particular room number
+std::vector<int> Cave::getAdjacent(int room)
+{
+	return caveRooms_[room].adjacentRooms_;
 }
 
 //Changes position
