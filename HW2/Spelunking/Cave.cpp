@@ -89,32 +89,20 @@ Cave::Cave()
 			caveRooms_.push_back(thisRoom);
 		}
 
-		bool connected = false;
-		while (!connected)
+		int room;
+		for (int i = 0; i < 14; i++)
 		{
-			int room1;
-			int room2;
-
-			do
+			for (int j = caveRooms_[i].adjacentRooms_.size(); j < 3; j++)
 			{
-				room1 = dist(gen);
-				room2 = dist(gen);
-			} while (caveRooms_[room1].adjacentRooms_.size() == 3
-				|| caveRooms_[room2].adjacentRooms_.size() == 3);
-
-			connect(room1, room2);
-
-			for (int i = 0; i < 15; i++)
-			{
-				if (caveRooms_[i].adjacentRooms_.size() != 3)
+				do
 				{
-					connected = false;
-					break;
-				}
-				else
-				{
-					connected = true;
-				}
+					room = dist(gen);
+					if (room <= i)
+					{
+						room += 13 - i;
+					}
+				} while (caveRooms_[room].adjacentRooms_.size() == 3);
+				connect(i, room);
 			}
 		}
 	}
