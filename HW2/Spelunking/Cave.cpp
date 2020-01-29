@@ -85,6 +85,8 @@ Cave::Cave()
 					"your feet.";
 				break;
 			}
+
+			caveRooms_.push_back(thisRoom);
 		}
 
 		bool connected = false;
