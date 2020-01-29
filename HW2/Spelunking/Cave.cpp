@@ -161,11 +161,37 @@ void Cave::printLongDesc(int room) const
 //save rooms to an output stream
 void Cave::saveRooms(std::ostream& os) const
 {
+	os << "Full Cave System:" << std::endl;
 
+	for (auto n : caveRooms_)
+	{
+		os << n.roomNumber_ << " " << n.shortDesc_ << " " << n.longDesc_;
+		for (auto m : n.adjacentRooms_)
+		{
+			os << " " << m;
+		}
+		os << std::endl;
+	}
 }
 
 //read rooms from an input stream
 void Cave::readRooms(std::istream& is)
 {
+	while (!is.eof())
+	{
+		int roomNum;
+		is >> roomNum;
+		Room thisRoom(roomNum);
+		
+		is >> thisRoom.shortDesc_;
+		is >> thisRoom.longDesc_;
+		int adjacent;
+		for (int i = 0; i < 3; i++)
+		{
+			is >> adjacent;
+			thisRoom.adjacentRooms_.push_back(adjacent);
+		}
 
+		caveRooms_.push_back(thisRoom);
+	}
 }
