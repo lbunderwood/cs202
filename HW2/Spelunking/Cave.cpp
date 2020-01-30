@@ -5,6 +5,7 @@
 // Cave.cpp
 
 #include<iostream>
+#include<sstream>
 
 #include "Cave.h"
 
@@ -16,18 +17,24 @@ Cave::Cave()
 	
 	std::getline(fin, line);
 
-	if (line == "Full Cave System:")
+	//if there's already a file with the format we want, use it and move on
+	if (line == "Full Cave System:" && readRooms(fin))
 	{
-		readRooms(fin);
 		return;
 	}
-	else
+	else //otherwise, we build the cave system
 	{
+		//in case caveRooms was populated by readRooms at all
+		caveRooms_.clear();
+
+		//this will generate random numbers to determine room descriptions and
+		//connections randomly
 		std::random_device r;
 		std::mt19937 gen(r());
 		std::uniform_int_distribution<> dist(0, 14);
 		int stringNum;
 
+		//creates 15 rooms, each with a random desc and adds them to caveRooms_
 		for (int i = 0; i < 15; i++)
 		{
 			Room thisRoom(i);
@@ -35,8 +42,8 @@ Cave::Cave()
 
 			switch (stringNum)
 			{
-			case 0:
-			case 1:
+			case 0: //different number of cases = different weighted chance
+			case 1: //of getting this desc for a given room
 			case 2:
 				thisRoom.shortDesc_ = "You hear a faint chirping and rustling.";
 				thisRoom.longDesc_ = "The room is full of bats! They were asleep, "
@@ -89,19 +96,72 @@ Cave::Cave()
 			caveRooms_.push_back(thisRoom);
 		}
 
+		//this connects the rooms together randomly
 		int room;
-		for (int i = 0; i < 14; i++)
+		for (int i = 0; i < 14; i++) //for each room,
 		{
+			//for each of the not already assigned adjacent rooms
 			for (int j = caveRooms_[i].adjacentRooms_.size(); j < 3; j++)
 			{
+
+				//this for loop checks to see if all of the connections have
+				//already been made. Had to create it in response to an issue
+				//where one final room has only 2 connections
+				bool allConnectionsMade = false;
+				for (auto n : caveRooms_)
+				{
+					if (n.roomNumber_ != i)
+					{
+						if (n.adjacentRooms_.size() != 3)
+						{
+							allConnectionsMade = false;
+							break;
+						}
+						else
+						{
+							allConnectionsMade = true;
+						}
+					}
+				}
+
+				//if we got all the way through the loop and allConnectionsMade
+				//wasn't set to false, we get out of here
+				if (allConnectionsMade == true)
+				{
+					break;
+				}
+
+				//bool to see if the two rooms already have been connected once
+				bool alreadyConnected = false;
+
+				//generates random numbers until we get a good one to connect
 				do
 				{
+					alreadyConnected = false;
 					room = dist(gen);
-					if (room <= i)
+
+					//since we're counting up as we make connections, we don't
+					//want to connect to any rooms lower than this one. This
+					//if statement saves the do/while many iterations
+					if (room < i)
 					{
-						room += 13 - i;
+						room += 14 - i;
 					}
-				} while (caveRooms_[room].adjacentRooms_.size() == 3);
+
+					//make sure they aren't already joined
+					for (auto n : caveRooms_[i].adjacentRooms_)
+					{
+						if (n == room)
+						{
+							alreadyConnected = true;
+						}
+					}
+				} while (caveRooms_[room].adjacentRooms_.size() == 3 || room == i
+					|| alreadyConnected);
+
+				//only once we find a room that this room doesnt have another
+				//connection with, that isn't itself and isn't already full,
+				//we actually connect them.
 				connect(i, room);
 			}
 		}
@@ -157,37 +217,78 @@ void Cave::printLongDesc(int room) const
 //save rooms to an output stream
 void Cave::saveRooms(std::ostream& os) const
 {
+	//begin w this so we know the file is good later
 	os << "Full Cave System:" << std::endl;
 
+	//cycle through rooms, putting room number, each desc, and each connected
+	//room on individual lines
 	for (auto n : caveRooms_)
 	{
-		os << n.roomNumber_ << " " << n.shortDesc_ << " " << n.longDesc_;
+		os << n.roomNumber_ << std::endl << n.shortDesc_ << std::endl 
+			<< n.longDesc_ << std::endl;
 		for (auto m : n.adjacentRooms_)
 		{
-			os << " " << m;
+			os << m << std::endl;
 		}
 		os << std::endl;
 	}
 }
 
-//read rooms from an input stream
-void Cave::readRooms(std::istream& is)
+//Prints an error message for file input
+void readError()
 {
+	std::cout << "Something went wrong in reading reading some previously "
+		<< "saved data. Rebuilding cave system....." << std::endl;
+}
+
+//read rooms from an input stream
+bool Cave::readRooms(std::istream& is)
+{
+	//until we hit end of file, read 'em in one room at a time
 	while (!is.eof())
 	{
 		int roomNum;
-		is >> roomNum;
-		Room thisRoom(roomNum);
-		
-		is >> thisRoom.shortDesc_;
-		is >> thisRoom.longDesc_;
-		int adjacent;
-		for (int i = 0; i < 3; i++)
-		{
-			is >> adjacent;
-			thisRoom.adjacentRooms_.push_back(adjacent);
-		}
+		std::string placeholder;
+		std::getline(is, placeholder);
+		std::istringstream in(placeholder);
+		in >> roomNum;
 
-		caveRooms_.push_back(thisRoom);
+		if (placeholder == "")
+		{
+			break;
+		}
+		else if (in)
+		{
+			Room thisRoom(roomNum);
+
+			std::getline(is, thisRoom.shortDesc_);
+			std::getline(is, thisRoom.longDesc_);
+			int adjacent;
+			while(true)
+			{
+				std::getline(is, placeholder);
+				std::istringstream instream(placeholder);
+				instream >> adjacent;
+				if (placeholder == "")
+				{
+					break;
+				}
+				else if (instream)
+				{
+					thisRoom.adjacentRooms_.push_back(adjacent);
+				}
+				else
+				{
+					readError();
+					return false;
+				}
+			}
+			caveRooms_.push_back(thisRoom);
+		}
+		else
+		{
+			readError();
+			return false;
+		}
 	}
 }

@@ -44,7 +44,7 @@ public:
 	void saveRooms(std::ostream & os) const;
 	
 	//read rooms from an input stream
-	void readRooms(std::istream & is);
+	bool readRooms(std::istream & is);
 
 private:
 	struct Room

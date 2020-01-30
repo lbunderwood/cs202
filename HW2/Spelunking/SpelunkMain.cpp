@@ -14,7 +14,7 @@ bool getInt(int& num)
 	std::string line;
 	std::getline(std::cin, line);
 	std::istringstream in(line);
-	in >> line;
+	in >> num;
 
 	if (in)
 		return true;
@@ -44,19 +44,21 @@ int main()
 			<< "Enter one of the numbers below to enter the room "
 			<< "described.\nEnter 0 at any time to quit." << std::endl;
 			
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; 
+			i < cave.getAdjacent(cave.getCurrentRoom()).size(); i++)
 		{
 			std::cout << "\t" << i + 1 << ". ";
 			cave.printShortDesc(cave.getAdjacent(cave.getCurrentRoom())[i]);
 			std::cout << std::endl;
 		}
 
-		while (!getInt(menuchoice))
+		while (!getInt(menuchoice) || menuchoice > 3 || menuchoice < 0)
 		{
-			std::cout << "Please enter an integer." << std::endl;
+			std::cout << "Please enter an integer corresponding to one of the"
+				<< " menu options." << std::endl;
 		}
 
-		cave.goToAdjacentRoom(menuchoice - 1);
+		if(menuchoice != 0) cave.goToAdjacentRoom(menuchoice - 1);
 	}
 
 	std::fstream out("Caves.txt");
