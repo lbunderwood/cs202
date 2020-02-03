@@ -1,1 +1,1 @@
-git log --pretty=format:"%ad & \\text{%s} \\\\" --date=short --reverse
+git log --pretty=format:"%ad & \text{%s} \\\\" --date=short --reverse
