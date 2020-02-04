@@ -21,10 +21,50 @@ public:
 		z_ = oldVec.z_;
 	}
 
-	Vec3f add(const Vec3f& a, const Vec3f& b)
+	Vec3f add(const Vec3f& b)
 	{
-		Vec3f output(a.x_ + b.x_, a.y_ + b.y_, a.z_ + b.z_);
+		Vec3f output(x_ + b.x_, y_ + b.y_, z_ + b.z_);
 		return output;
+	}
+
+	Vec3f sub(const Vec3f& b)
+	{
+		Vec3f output(x_ - b.x_, y_ - b.y_, z_ - b.z_);
+		return output;
+	}
+
+	Vec3f scale(float c)
+	{
+		Vec3f output(x_ *c, y_ * c, z_ * c);
+		return output;
+	}
+
+	Vec3f negate()
+	{
+		Vec3f output(x_ * (-1), y_ * (-1), z_ * (-1));
+		return output;
+	}
+
+	float dot(const Vec3f& b)
+	{
+		return x_ * b.x_ + y_ * b.y_ + z_ + b.z_;
+	}
+
+	Vec3f cross(const Vec3f& b)
+	{
+		Vec3f output(y_ * b.z_ - z_ * b.y_, z_ * b.x_ - x_ * b.z_,
+			x_ * b.y_ - y_ * b.z_);
+		return output;
+	}
+
+	float length()
+	{
+		return sqrt(pow(x_, 2) + pow(y_, 2) + pow(z_, 2));
+	}
+
+	Vec3f unit()
+	{
+		return this->scale(1.0f/this->length);
 	}
 
 	float x_, y_, z_;
