@@ -29,6 +29,6 @@ private:
 
 	// stores coordinate positions of each token with corresponding index
 	// as line, column
-	std::vector<std::pair<int, int>> coordinates;
+	std::vector<std::pair<int, int>> coordinates_;
 };
 
