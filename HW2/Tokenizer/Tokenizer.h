@@ -10,6 +10,8 @@
 
 class Tokenizer
 {
+public:
+
 	// Default Constructor
 	Tokenizer() {}
 

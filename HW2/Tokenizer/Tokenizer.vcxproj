@@ -123,10 +123,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="TokenMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
