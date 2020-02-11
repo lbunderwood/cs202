@@ -7,11 +7,44 @@
 
 #include "Tokenizer.h"
 #include<istream>
+#include<sstream>
+#include<algorithm>
 
 // Takes a string and puts it into tokens
 bool Tokenizer::lineToTokens(const std::string& line)
 {
+	// set up our line number
+	int lineNum = 0;
+	int columnNum = 0;
+	if (coordinates_.size() > 0)
+	{
+		lineNum = coordinates_.back().first + 1;
+	}
 
+	std::istringstream iss(line);
+	std::string token;
+
+	while (iss)
+	{
+		iss >> token;
+
+		std::string::const_iterator iter = 
+			search(line.begin(), line.end(), token.begin(), token.end());
+
+		if (iter == line.end())
+		{
+			return false;
+		}
+
+		columnNum = std::distance(line.begin(), iter);
+
+		tokens_.push_back(token);
+		std::pair<int, int> coord = { lineNum, columnNum };
+		coordinates_.push_back(coord);
+	}
+
+	if (iss.eof()) return true;
+	else return false;
 }
 
 // Reads the file in, tokenizing as it goes
