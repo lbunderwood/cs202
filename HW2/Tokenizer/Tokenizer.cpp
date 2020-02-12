@@ -16,11 +16,20 @@
 bool Tokenizer::lineToTokens(const std::string& line)
 {
 	// set up our coordinates
-	int lineNum = 0;
+	int lineNum = 1;
 	int columnNum = 0;
 	if (coordinates_.size() > 0)
 	{
 		lineNum = coordinates_.back().first + 1;
+	}
+
+	// check for blank line
+	if (line == "")
+	{
+		tokens_.push_back("Blank Line");
+		std::pair<int, int> coord = { lineNum, 1 };
+		coordinates_.push_back(coord);
+		return true;
 	}
 
 	// set up to tokenize 
@@ -28,27 +37,30 @@ bool Tokenizer::lineToTokens(const std::string& line)
 	std::string token;
 
 	// go through the line one token at a time
-	while (iss)
+	std::string::const_iterator iter = line.begin();
+	while (iss >> token)
 	{
-		// get the token
-		iss >> token;
-
 		// find the position in the line
-		std::string::const_iterator iter = 
-			search(line.begin(), line.end(), token.begin(), token.end());
-
+		iter = search(iter, line.end(), token.begin(), token.end());
+		
 		// make sure the token was found correctly
 		if (iter == line.end())
 		{
 			return false;
 		}
-
+		
 		// find the column number from token position
 		columnNum = std::distance(line.begin(), iter);
 
-		//push back the token and coordinates
-		tokens_.push_back(token);
-		std::pair<int, int> coord = { lineNum, columnNum };
+		// increment the iterator to make sure repeated words aren't an issue
+		for (int i = 0; i < token.size(); i++)
+		{
+			iter++;
+		}
+		
+		// push back the token and coordinates
+		tokens_.push_back('"' + token + '"');
+		std::pair<int, int> coord = { lineNum, columnNum + 1 };
 		coordinates_.push_back(coord);
 	}
 
@@ -63,10 +75,12 @@ bool Tokenizer::readFile(std::istream& istr)
 	std::string line;
 
 	// while the file is legit, pass each line to lineToTokens
-	while (istr)
+	while (std::getline(istr, line))
 	{
-		std::getline(istr, line);
-		lineToTokens(line);
+		if (!lineToTokens(line))
+		{
+			return false;
+		}
 	}
 
 	// if we're done because we reached eof, return true. If something went

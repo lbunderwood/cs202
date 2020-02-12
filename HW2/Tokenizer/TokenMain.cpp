@@ -17,12 +17,13 @@
 void argumentError()
 {
 	std::cout << "ERROR: BAD ARGUMENTS" << std::endl
-		<< "Please enter the filename, then optionally the --lineonly "
+		<< "Please enter the filename, then optionally the lineonly "
 		<< "argument will read in the file, without printing the results.";
 }
 
 int main(int argc, char** argv)
 {
+	// initialize the timer to start the clock
 	Timer timer;
 
 	// initialize vairbles so they don
@@ -50,10 +51,11 @@ int main(int argc, char** argv)
 			return 0;
 		}
 
-		// check for --lineonly
+		// check for lineonly
 		if (argc == 3)
 		{
-			if (argv[2] == "--lineonly")
+			std::string arg = argv[2];
+			if (arg == "lineonly")
 			{
 				lineonly = true;
 			}
@@ -65,16 +67,26 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// create filestream
 	std::ifstream ifs(filename);
 
+	// initialize tokenizer
 	Tokenizer tokenizer;
-	tokenizer.readFile(ifs);
 
-	if (lineonly)
+	// read in the file, checking for errors
+	if (!tokenizer.readFile(ifs))
+	{
+		std::cout << "ERROR READING FILE\nPlease check your filename and "
+			<< "try again.\n";
+	}
+
+	// if the argument calls for it, print the tokens
+	if (!lineonly)
 	{
 		tokenizer.printTokens(std::cout);
 	}
 
+	// stop the timer and print the results
 	timer.end();
 	std::cout << "\n\n\nTime Elapsed: " << timer.getDuration() << " s";
 }
