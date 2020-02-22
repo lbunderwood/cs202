@@ -115,6 +115,11 @@ Cave::Cave()
 			// now to create room descriptions
 			stringNum = dist(gen);
 
+			if (i == 0)
+			{
+				stringNum = 4;
+			}
+
 			switch (stringNum)
 			{
 			case 0: /////// BATS /////////////
