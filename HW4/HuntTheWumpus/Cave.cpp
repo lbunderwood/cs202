@@ -83,7 +83,6 @@ Cave::Cave()
 				//generates random numbers until we get a good one to connect
 				do
 				{
-					alreadyConnected = false;
 					room = dist(gen);
 
 					//since we're counting up as we make connections, we don't
@@ -94,17 +93,9 @@ Cave::Cave()
 						room += 14 - i;
 					}
 
-					//make sure they aren't already joined
-					for (auto n : getAdjacent(i))
-					{
-						if (n == room)
-						{
-							alreadyConnected = true;
-						}
-					}
 				} while (getAdjacent(room).size() == 3
 					|| room == i
-					|| alreadyConnected);
+					|| areConnected(i, room));
 
 				//only once we find a room that this room doesnt have another
 				//connection with, that isn't itself and isn't already full,
@@ -224,6 +215,20 @@ std::string Cave::getAdjacentHazards(int room)
 	}
 
 	return hazards;
+}
+
+//returns whether the two rooms are connected
+bool Cave::areConnected(int room1, int room2)
+{
+	for (auto n : getAdjacent(room1))
+	{
+		if (n == room2)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //Changes position

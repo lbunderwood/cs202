@@ -28,6 +28,9 @@ public:
 	//returns a string of nearby hazards
 	std::string getAdjacentHazards(int room);
 
+	//returns whether the two rooms are connected
+	bool areConnected(int room1, int room2);
+
 	//Changes position
 	void goToRoom(int room);
 	
