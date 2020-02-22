@@ -25,6 +25,9 @@ public:
 	//get adjacent room numbers given a particular room number
 	std::vector<int> getAdjacent(int room);
 
+	//returns a string of nearby hazards
+	std::string getAdjacentHazards(int room);
+
 	//Changes position
 	void goToRoom(int room);
 	

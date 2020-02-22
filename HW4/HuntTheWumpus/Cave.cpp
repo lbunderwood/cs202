@@ -211,6 +211,21 @@ std::vector<int> Cave::getAdjacent(int room)
 	return caveRooms_[room].adjacentRooms_;
 }
 
+//returns a string of nearby hazards
+std::string Cave::getAdjacentHazards(int room)
+{
+	std::string hazards = "";
+	for (auto n : getAdjacent(room))
+	{
+		if (caveRooms_[n].bat || caveRooms_[n].pit || caveRooms_[n].wumpus)
+		{
+			hazards += caveRooms_[n].shortDesc_ + "\n";
+		}
+	}
+
+	return hazards;
+}
+
 //Changes position
 void Cave::goToRoom(int room)
 {
