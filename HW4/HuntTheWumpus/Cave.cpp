@@ -217,6 +217,16 @@ std::string Cave::getAdjacentHazards(int room)
 	return hazards;
 }
 
+//returns vector with current Room.bat .pit and .wumpus
+std::vector<bool> Cave::getHazards()
+{
+	std::vector<bool> hazards;
+	hazards.push_back(caveRooms_[currentRoom_].bat);
+	hazards.push_back(caveRooms_[currentRoom_].pit);
+	hazards.push_back(caveRooms_[currentRoom_].wumpus);
+	return hazards;
+}
+
 //returns whether the two rooms are connected
 bool Cave::areConnected(int room1, int room2)
 {
