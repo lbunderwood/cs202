@@ -218,12 +218,12 @@ std::string Cave::getAdjacentHazards(int room)
 }
 
 //returns vector with current Room.bat .pit and .wumpus
-std::vector<bool> Cave::getHazards()
+std::vector<bool> Cave::getHazards(int room)
 {
 	std::vector<bool> hazards;
-	hazards.push_back(caveRooms_[currentRoom_].bat);
-	hazards.push_back(caveRooms_[currentRoom_].pit);
-	hazards.push_back(caveRooms_[currentRoom_].wumpus);
+	hazards.push_back(caveRooms_[room].bat);
+	hazards.push_back(caveRooms_[room].pit);
+	hazards.push_back(caveRooms_[room].wumpus);
 	return hazards;
 }
 

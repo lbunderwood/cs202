@@ -29,7 +29,7 @@ public:
 	std::string getAdjacentHazards(int room);
 
 	//returns vector with current Room.bat .pit and .wumpus
-	std::vector<bool> getHazards();
+	std::vector<bool> getHazards(int room);
 
 	//returns whether the two rooms are connected
 	bool areConnected(int room1, int room2);
