@@ -39,6 +39,12 @@ public:
 	
 	//moves player to adjacent room 0, 1, or 2
 	void goToAdjacentRoom(int room);
+
+	//assigns the Wumpus to a room other than the one passed
+	void moveWumpus(int room);
+
+	//sets room description to default room (after wumpus has left)
+	void resetRoom(int room);
 	
 	//make two rooms adjacent
 	void connect(int room1, int room2);

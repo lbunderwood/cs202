@@ -130,60 +130,13 @@ Cave::Cave()
 				break;
 
 			default: //////// NO HAZARD /////////
-				caveRooms_[i].shortDesc_ = "";
-				caveRooms_[i].longDesc_ = "You enter room " +
-					std::to_string(i) + ". There are tunnels to rooms ";
-
-				// put adjacent room numbers in with nice formatting
-				for (int j = 0; j < getAdjacent(i).size(); i++)
-				{
-					caveRooms_[i].longDesc_ +=
-						std::to_string(getAdjacent(i)[j]);
-					if (j + 3 == getAdjacent(i).size())
-					{
-						caveRooms_[i].longDesc_ += ", ";
-					}
-					else if (j + 2 == getAdjacent(i).size())
-					{
-						caveRooms_[i].longDesc_ += ", and ";
-					}
-				}
-				caveRooms_[i].longDesc_ += ".";
+				resetRoom(i);
 				break;
 			}
 		}
 
 		// insert the wumpus in a reasonable location
-		for (int i = 1; i < caveRooms_.size(); i++)
-		{
-			bool badLocation = false;
-
-			// we don't really want the wumpus adjacent to the start room
-			for (auto n : getAdjacent(0))
-			{
-				if (n == i)
-				{
-					badLocation == true;
-					break;
-				}
-			}
-
-			// we also don't want it in a room that already has a hazard
-			if (caveRooms_[i].bat || caveRooms_[i].pit)
-			{
-				badLocation = true;
-			}
-
-			// if the location is good, put the wumpus there and exit the loop
-			if (!badLocation)
-			{
-				caveRooms_[i].wumpus = true;
-				caveRooms_[i].shortDesc_ = "You can smell the wumpus.";
-				caveRooms_[i].longDesc_ = "You enter the cave with the Wumpus."
-					" It eats you, and you die.";
-				break;
-			}
-		}
+		moveWumpus(0);
 	}
 }
 
@@ -251,6 +204,77 @@ void Cave::goToRoom(int room)
 void Cave::goToAdjacentRoom(int room)
 {
 	currentRoom_ = caveRooms_[currentRoom_].adjacentRooms_[room];
+}
+
+//assigns the Wumpus to a room other than the one passed
+void Cave::moveWumpus(int room)
+{
+	// insert the wumpus in a reasonable location
+	for (int i = 0; i < caveRooms_.size(); i++)
+	{
+		bool badLocation = false;
+
+		// we don't really want the wumpus in the room it was just in
+		// or one adjacent to it (or the start room, for initial placement)
+		if (i == room)
+		{
+			badLocation = true;
+		}
+		for (auto n : getAdjacent(room))
+		{
+			if (n == i)
+			{
+				badLocation == true;
+				break;
+			}
+		}
+
+		// we also don't want it in a room that already has a hazard
+		if (caveRooms_[i].bat || caveRooms_[i].pit)
+		{
+			badLocation = true;
+		}
+
+		// if the location is good, put the wumpus there and exit the loop
+		if (!badLocation)
+		{
+			caveRooms_[i].wumpus = true;
+			caveRooms_[i].shortDesc_ = "You can smell the wumpus.";
+			caveRooms_[i].longDesc_ = "You enter the cave with the Wumpus."
+				" It eats you, and you die.";
+			break;
+		}
+	}
+}
+
+//sets room description to default room (after wumpus has left)
+void Cave::resetRoom(int room)
+{
+	//clear short description
+	caveRooms_[room].shortDesc_ = "";
+
+	// put adjacent room numbers in with nice formatting
+	caveRooms_[room].longDesc_ = "You enter room " +
+		std::to_string(room) + ". There are tunnels to rooms ";
+	for (int j = 0; j < getAdjacent(room).size(); j++)
+	{
+		caveRooms_[room].longDesc_ +=
+			std::to_string(getAdjacent(room)[j]);
+		if (j + 3 == getAdjacent(room).size())
+		{
+			caveRooms_[room].longDesc_ += ", ";
+		}
+		else if (j + 2 == getAdjacent(room).size())
+		{
+			caveRooms_[room].longDesc_ += ", and ";
+		}
+	}
+	caveRooms_[room].longDesc_ += ".";
+
+	// reset all hazards
+	caveRooms_[room].bat = false;
+	caveRooms_[room].pit = false;
+	caveRooms_[room].wumpus = false;
 }
 
 //make two rooms adjacent
