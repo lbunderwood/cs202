@@ -43,13 +43,13 @@ Cave::Cave()
 
 		//this connects the rooms together and assigns descriptions randomly
 		int room;
-		for (int i = 0; i < 14; i++) //for each room,
+		for (int i = 0; i < 15; i++) //for each room,
 		{
 
 			//for each of the not already assigned adjacent rooms
 			for (int j = getAdjacent(i).size(); j < 3; j++)
 			{
-
+				if (i == 14) continue;
 				//this for loop checks to see if all of the connections have
 				//already been made. Had to create it in response to an issue
 				//where one final room has only 2 connections
