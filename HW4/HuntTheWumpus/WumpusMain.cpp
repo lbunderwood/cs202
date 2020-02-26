@@ -116,15 +116,33 @@ int main()
 			// we already checked that it was adjacent, so just move
 			cave.goToRoom(room1);
 		}
+		// if we're shooting an arrow
 		else if (moveShoot == 's' || moveShoot == 'S')
 		{
+			// if the input was legit
 			if (cave.areConnected(room1, room2) && cave.areConnected(room2, room3))
 			{
+				// if we hit the wumpus
 				if (cave.getHazards(room1)[2]
 					|| cave.getHazards(room2)[2]
 					|| cave.getHazards(room3)[2])
 				{
-
+					std::cout << "You shoot into room ";
+					if (cave.getHazards(room1)[2]) std::cout << room1;
+					if (cave.getHazards(room2)[2]) std::cout << room2;
+					if (cave.getHazards(room3)[2]) std::cout << room3;
+					std::cout << ", where the Wumpus was sleeping, killing "
+						"the beast!\n\nYOU WIN!";
+					break;
+				}
+				else // if we missed
+				{
+					std::cout << "Your arrow sails through some empty rooms, "
+						"clattering noisily against the far wall of room "
+						<< room3 << ". You hear a distant rumbling, as the "
+						"Wumpus, awakened by your shot, relocates.";
+					cave.moveWumpus(room3);
+					cave.resetRoom(room3);
 				}
 			}
 		}
