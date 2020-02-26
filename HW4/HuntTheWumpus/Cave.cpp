@@ -149,6 +149,12 @@ int Cave::getCurrentRoom()
 	return currentRoom_;
 }
 
+//Returns the room number the wumpus is in
+int Cave::getWumpusRoom()
+{
+	return wumpusRoom_;
+}
+
 //get adjacent room numbers given a particular room number
 std::vector<int> Cave::getAdjacent(int room)
 {
@@ -242,6 +248,8 @@ void Cave::moveWumpus(int room)
 			caveRooms_[i].shortDesc_ = "You can smell the wumpus.";
 			caveRooms_[i].longDesc_ = "You enter the cave with the Wumpus."
 				" It eats you, and you die.";
+			resetRoom(wumpusRoom_);
+			wumpusRoom_ = i;
 			break;
 		}
 	}

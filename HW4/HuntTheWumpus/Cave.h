@@ -22,6 +22,9 @@ public:
 	//Returns current room's number
 	int getCurrentRoom();
 
+	//Returns the room number the wumpus is in
+	int getWumpusRoom();
+
 	//get adjacent room numbers given a particular room number
 	std::vector<int> getAdjacent(int room);
 
@@ -76,6 +79,7 @@ private:
 	};
 
 	int currentRoom_ = 0;
+	int wumpusRoom_ = 0;
 	std::vector<Room> caveRooms_;
 };
 
