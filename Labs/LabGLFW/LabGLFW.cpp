@@ -53,10 +53,10 @@ int triangleCircle(void)
         glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0.2f, 0.2f, 0.8f, 1.0f);
 		glBegin(GL_TRIANGLES);
+		glColor3f(0.8f, 0.2f, 0.2f);
 		glVertex3f(-0.75f, -0.75f, 0.0f);	// bottom left
 		glVertex3f(0.75f, -0.75f, 0.0f);	// bottom right
 		glVertex3f(0.0f, 0.75f, 0.0f);		// middle top
-		glColor3f(0.8f, 0.2f, 0.2f);
 		glEnd();
 
 		glLoadIdentity();

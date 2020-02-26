@@ -1,4 +1,6 @@
+#include "pch.h"
 #include<GLFW\glfw3.h>
+#include<string>
 
 #ifndef TEXTUREMAP_H
 #define TEXTUREMAP_H
@@ -10,9 +12,9 @@ namespace mgl
 	public:
 		TextureMap();
 
-		TextureMap(static GLubyte textMap[]);
+		TextureMap(int h, int w, std::string& textMap);
 
-		void assignMap(static GLubyte textMap[]);
+		void initialize(static GLubyte textMap[]);
 
 	private:
 
