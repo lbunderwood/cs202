@@ -11,13 +11,14 @@
 
 void printInstructions()
 {
-	std::cout << "To move, enter an \'m\' followed by the number of the room a"
-		"djacent to your current room that you would like to move to. To shoot"
-		", enter an \'s\' followed by the numbers of the rooms you would like "
-		"to shoot your arrow through (three rooms, each adjacent to the "
-		"last (note that just because two rooms are adjacent to you does not m"
-		"ean that they are adjacent to each other)). Separate all letters and "
-		"numbers in your actions by spaces.\n\nExamples:\nm 3\nM 6\ns 9 5 2"
+	std::cout << "To move, enter an \'m\' followed by the number of the room\n"
+		"adjacent to your current room that you would like to move to.\n"
+		"To shoot, enter an \'s\' followed by the numbers of the rooms you\n"
+		"would like to shoot your arrow through (three rooms, each adjacent \n"
+		"to the last (note that just because two rooms are adjacent to you \n"
+		"does not mean that they are adjacent to each other)). Separate all \n"
+		"letters and numbers in your actions by spaces.\n\nExamples:\nm 3\nM 6"
+		"\ns 9 5 2"
 		<< std::endl;
 }
 
@@ -29,7 +30,7 @@ bool getInput(char& MorS, int& r1, int& r2, int& r3)
 	std::istringstream iss(input);
 
 	// if our first two inputs were good...
-	if (iss >> MorS && iss >> r1)
+	if (iss >> MorS && iss >> r1 && r1 < 15)
 	{
 		// ...and we're moving, then get us out
 		if (MorS == 'M' || MorS == 'm')
@@ -37,7 +38,7 @@ bool getInput(char& MorS, int& r1, int& r2, int& r3)
 			return true;
 		}
 		// ...and we're shooting, then collect the other two inputs and return
-		else if (iss >> r2 && iss >> r3)
+		else if (iss >> r2 && iss >> r3 && r2 < 15 && r3 < 15)
 		{
 			return true;
 		}
@@ -54,13 +55,13 @@ int main()
 	{
 		// sometimes cave generation takes a few seconds and we want the user to
 		// know something is happening
-		std::cout << "Loading......" << std::endl << std::endl;
+		std::cout << "\nLoading......" << std::endl << std::endl;
 
 		// initialize cave. Default constructor generates the cave for us
 		Cave cave;
 
 		// print welcome message and await response
-		std::cout << "Welcome to Hunt the Wumpus!" << std::endl << std::endl
+		std::cout << "\nWelcome to Hunt the Wumpus!" << std::endl << std::endl
 			<< "Enter a 0 to quit or anything else for instructions at any time!"
 			<< std::endl << std::endl << "Press ENTER to begin!" << std::endl;
 		std::string dummy;
@@ -73,7 +74,7 @@ int main()
 		int room3 = 0;
 
 		// loop until the user inputs 0
-		while (moveShoot != 0)
+		while (moveShoot != '0')
 		{
 			// print description of current room
 			std::cout << std::endl;
@@ -130,8 +131,8 @@ int main()
 						{
 							std::cout << "You shoot into room ";
 							if (cave.getHazards(room1)[2]) std::cout << room1;
-							if (cave.getHazards(room2)[2]) std::cout << room2;
-							if (cave.getHazards(room3)[2]) std::cout << room3;
+							else if (cave.getHazards(room2)[2]) std::cout << room2;
+							else if (cave.getHazards(room3)[2]) std::cout << room3;
 							std::cout << ", where the Wumpus was sleeping, "
 								"killing the beast!\n\nYOU WIN!\n\n";
 							break;
@@ -156,15 +157,21 @@ int main()
 					printInstructions();
 				}
 			}
-			else
+			else if (moveShoot == '{')
+			{
+				cave.saveRooms(std::cout);
+			}
+			else if (moveShoot != '0')
 			{
 				printInstructions();
 			}
 		}
 
 		keepPlaying = "";
-		if (moveShoot != 0)
+		if (moveShoot != '0')
 		{
+			std::fstream out("Caves.txt", std::ios::trunc | std::ios::out);
+			out.close();
 			while (keepPlaying != "Y" && keepPlaying != "y"
 				&& keepPlaying != "N" && keepPlaying != "n")
 			{
@@ -176,6 +183,7 @@ int main()
 		{
 			std::fstream out("Caves.txt");
 			cave.saveRooms(out);
+			out.close();
 			break;
 		}
 	}

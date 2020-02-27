@@ -20,12 +20,17 @@ Cave::Cave()
 	//if there's already a file with the format we want, use it and move on
 	if (line == "Full Cave System:" && readRooms(fin))
 	{
+		std::cout << "There was a game in progress. Continuing...\n";
+		fin.close();
 		return;
 	}
 	else //otherwise, we build the cave system
 	{
-		//in case caveRooms was populated by readRooms at all
+		//in case read was partially completed, the partial data needs to be reset
+		fin.close();
 		caveRooms_.clear();
+		currentRoom_ = 0;
+
 
 		//this will generate random numbers to determine room descriptions and
 		//connections randomly
@@ -80,6 +85,9 @@ Cave::Cave()
 				//bool to see if the two rooms already have been connected once
 				bool alreadyConnected = false;
 
+				//every once in a great while, we get stuck in this do/while,
+				//so this is here to prevent that
+				unsigned int count = 0;
 				//generates random numbers until we get a good one to connect
 				do
 				{
@@ -93,9 +101,11 @@ Cave::Cave()
 						room += 14 - i;
 					}
 
-				} while (getAdjacent(room).size() == 3
+					count++;
+				} while ((getAdjacent(room).size() == 3
 					|| room == i
-					|| areConnected(i, room));
+					|| areConnected(i, room))
+					&& count < 1000);
 
 				//only once we find a room that this room doesnt have another
 				//connection with, that isn't itself and isn't already full,
@@ -123,7 +133,7 @@ Cave::Cave()
 
 			case 2: /////// PIT ///////////////
 			case 3:
-				caveRooms_[i].shortDesc_ = "You feel a breeze";
+				caveRooms_[i].shortDesc_ = "You feel a breeze.";
 				caveRooms_[i].longDesc_ = "The room is a bottomless pit! You "
 					"charge in blindly, falling to your death.";
 				caveRooms_[i].pit = true;
@@ -215,20 +225,26 @@ void Cave::goToAdjacentRoom(int room)
 //assigns the Wumpus to a room other than the one passed
 void Cave::moveWumpus(int room)
 {
-	// insert the wumpus in a reasonable location
-	for (int i = 0; i < caveRooms_.size(); i++)
+	// loop until we insert the wumpus in a reasonable location
+	while (true)
 	{
+		//generates room numbers randomly
+		std::random_device r;
+		std::mt19937 gen(r());
+		std::uniform_int_distribution<> dist(0, 14);
+		int newLocation = dist(gen);
+
 		bool badLocation = false;
 
 		// we don't really want the wumpus in the room it was just in
 		// or one adjacent to it (or the start room, for initial placement)
-		if (i == room)
+		if (newLocation == room)
 		{
 			badLocation = true;
 		}
 		for (auto n : getAdjacent(room))
 		{
-			if (n == i)
+			if (n == newLocation)
 			{
 				badLocation == true;
 				break;
@@ -236,7 +252,7 @@ void Cave::moveWumpus(int room)
 		}
 
 		// we also don't want it in a room that already has a hazard
-		if (caveRooms_[i].bat || caveRooms_[i].pit)
+		if (caveRooms_[newLocation].bat || caveRooms_[newLocation].pit)
 		{
 			badLocation = true;
 		}
@@ -244,12 +260,12 @@ void Cave::moveWumpus(int room)
 		// if the location is good, put the wumpus there and exit the loop
 		if (!badLocation)
 		{
-			caveRooms_[i].wumpus = true;
-			caveRooms_[i].shortDesc_ = "You can smell the wumpus.";
-			caveRooms_[i].longDesc_ = "You enter the cave with the Wumpus."
+			caveRooms_[newLocation].wumpus = true;
+			caveRooms_[newLocation].shortDesc_ = "You can smell the wumpus.";
+			caveRooms_[newLocation].longDesc_ = "You enter the cave with the Wumpus."
 				" It eats you, and you die.";
 			resetRoom(wumpusRoom_);
-			wumpusRoom_ = i;
+			wumpusRoom_ = newLocation;
 			break;
 		}
 	}
@@ -259,7 +275,7 @@ void Cave::moveWumpus(int room)
 void Cave::resetRoom(int room)
 {
 	//clear short description
-	caveRooms_[room].shortDesc_ = "";
+	caveRooms_[room].shortDesc_ = "blank";
 
 	// put adjacent room numbers in with nice formatting
 	caveRooms_[room].longDesc_ = "You enter room " +
@@ -308,7 +324,9 @@ void Cave::printLongDesc(int room) const
 void Cave::saveRooms(std::ostream& os) const
 {
 	//begin w this so we know the file is good later
-	os << "Full Cave System:" << std::endl;
+	os << "Full Cave System:" << std::endl
+		<< currentRoom_ << std::endl 
+		<< wumpusRoom_ << std::endl;
 
 	//cycle through rooms, putting room number, each desc, and each connected
 	//room on individual lines
@@ -352,13 +370,19 @@ void Cave::saveRooms(std::ostream& os) const
 //Prints an error message for file input
 void readError()
 {
-	std::cout << "Something went wrong in reading reading some previously "
-		<< "saved data. Rebuilding cave system....." << std::endl;
+	std::cout << "No previous game found. Building new cave system...\n";
 }
 
 //read rooms from an input stream
 bool Cave::readRooms(std::istream& is)
 {
+	// get two initial numbers
+	if (!(is >> currentRoom_ && is >> wumpusRoom_))
+	{
+		readError();
+		return false;
+	}
+
 	//until we hit end of file, read 'em in one room at a time
 	while (!is.eof())
 	{
@@ -370,7 +394,7 @@ bool Cave::readRooms(std::istream& is)
 
 		if (placeholder == "")
 		{
-			break;
+			continue;
 		}
 		else if (in)
 		{
