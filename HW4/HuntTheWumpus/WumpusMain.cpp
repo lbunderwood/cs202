@@ -62,8 +62,9 @@ int main()
 
 		// print welcome message and await response
 		std::cout << "\nWelcome to Hunt the Wumpus!" << std::endl << std::endl
-			<< "Enter a 0 to quit or anything else for instructions at any time!"
-			<< std::endl << std::endl << "Press ENTER to begin!" << std::endl;
+			<< "Enter a 0 to quit or press ENTER while in the game for"
+			<< " instructions at any time!" << std::endl << std::endl 
+			<< "Press ENTER to begin!" << std::endl;
 		std::string dummy;
 		std::getline(std::cin, dummy);
 
