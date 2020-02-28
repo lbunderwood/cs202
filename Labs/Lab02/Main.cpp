@@ -9,6 +9,8 @@
 
 #include"Timer.h"
 
+#pragma comment(lib, "Timer.lib")
+
 int main()
 {
 	std::vector<Timer> timers;
