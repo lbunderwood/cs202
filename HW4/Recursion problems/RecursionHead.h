@@ -7,6 +7,16 @@
 #ifndef RECURSIONHEAD_H
 #define RECURSIONHEAD_H
 
+unsigned long long int fib(int n);
 
+unsigned long long int fib_loop(int n);
+
+unsigned long long int factorial(int n);
+
+unsigned long long int factorial_loop(int n);
+
+unsigned long long int ack();
+
+unsigned long long int ack_loop();
 
 #endif
