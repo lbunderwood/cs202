@@ -36,15 +36,14 @@ unsigned long long int fib_loop(int n)
 	// initialize deque with starting conditions
 	std::deque<unsigned long long int> seq = { 1, 1 };
 
-	// define recursively to index n
+	// define iteratively to index n
 	for (unsigned int i = 2; i <= n; i++)
 	{
 		seq.push_back(seq[i - 1] + seq[i - 2]);
 		seq.pop_front();
 	}
 
-	// return seq[n], not seq.back so that if we asked for 
-	// n = 0 or 1 we get the right thing
+	// return last term created
 	return seq.back();
 }
 
@@ -61,19 +60,33 @@ unsigned long long int factorial(int n)
 // return n factorial, not recursively defined
 unsigned long long int factorial_loop(int n)
 {
+	// initialize deque w initial terms
 	std::deque<unsigned long long int> seq = { 1, 1 };
 
+	// multiply previous term by i until we reach n
 	for (int i = 2; i <= n; i++)
 	{
-		seq.push_back(seq[i - 1] * seq[i - 2]);
+		seq.push_back(i * seq[i - 1]);
 		seq.pop_front();
 	}
 
+	// return last term
 	return seq.back();
 }
 
 // return Ackerman's number m,n
 unsigned long long int ack(int m, int n)
 {
-
+	if (m == 0)
+	{
+		return (unsigned long long int)n + 1;
+	}
+	else if (m > 0 && n == 0)
+	{
+		return ack(m - 1, 1);
+	}
+	else if (m > 0 && n > 0)
+	{
+		return ack(m - 1, ack(m, n - 1));
+	}
 }
