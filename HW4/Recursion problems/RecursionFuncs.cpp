@@ -51,13 +51,25 @@ unsigned long long int fib_loop(int n)
 // return n factorial, recursively defined
 unsigned long long int factorial(int n)
 {
+	// if not 1 or 0, return n * n - 1
+	if (n >= 2) return n * factorial(n - 1);
 
+	// if it is 1 or 0 return 1
+	else return 1;
 }
 
 // return n factorial, not recursively defined
 unsigned long long int factorial_loop(int n)
 {
+	std::deque<unsigned long long int> seq = { 1, 1 };
 
+	for (int i = 2; i <= n; i++)
+	{
+		seq.push_back(seq[i - 1] * seq[i - 2]);
+		seq.pop_front();
+	}
+
+	return seq.back();
 }
 
 // return Ackerman's number m,n
