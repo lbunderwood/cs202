@@ -20,11 +20,12 @@ unsigned long long int fib_slow(int n)
 // return term n of the fibonacci, recusrively defined, but the faster way
 std::pair<unsigned long long int, unsigned long long int> fib_fast(int n)
 {
-	// initialize some pairs to hold our stuff
-	auto previous = fib_fast(n - 1);
-
 	// if fib(n-2) even exists, define recursively
-	if (n >= 2)	return { previous.first + previous.second, previous.first };
+	if (n >= 2)
+	{
+		auto previous = fib_fast(n - 1);
+		return { previous.first + previous.second, previous.first };
+	}
 
 	//else, return 1
 	else return { 1, 1 };
@@ -39,7 +40,7 @@ unsigned long long int fib_loop(int n)
 	// define iteratively to index n
 	for (unsigned int i = 2; i <= n; i++)
 	{
-		seq.push_back(seq[i - 1] + seq[i - 2]);
+		seq.push_back(seq[0] + seq[1]);
 		seq.pop_front();
 	}
 
@@ -66,7 +67,7 @@ unsigned long long int factorial_loop(int n)
 	// multiply previous term by i until we reach n
 	for (int i = 2; i <= n; i++)
 	{
-		seq.push_back(i * seq[i - 1]);
+		seq.push_back(i * seq[1]);
 		seq.pop_front();
 	}
 
