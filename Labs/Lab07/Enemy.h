@@ -15,9 +15,13 @@ class Enemy
 public:
 	Enemy();
 
+	Enemy(std::string name, double health, double attack);
+
 	std::string getName() const;
 
 	std::pair<double, double> getStats() const;
+
+	Enemy& operator=(const Enemy& old);
 
 private:
 	std::string name_;
