@@ -23,11 +23,26 @@ public:
 	Complex(double real, double complex) 
 		: real_{ real }, complex_{ complex } {};
 
+	double getReal() const;
+
+	double getComp() const;
+
+	Complex operator+(Complex rhs);
+
+	Complex operator+=(Complex rhs);
+
+	Complex operator+=(double rhs);
+
 private:
 
 	double real_;
 	double complex_;
 
 };
+
+std::ostream& operator<<(std::ostream& os, Complex comp);
+
+Complex operator+(double lhs, Complex rhs);
+Complex operator+(Complex lhs, double rhs);
 
 #endif
