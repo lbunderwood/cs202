@@ -43,6 +43,7 @@ private:
 std::ostream& operator<<(std::ostream& os, Complex comp);
 
 Complex operator+(double lhs, Complex rhs);
+
 Complex operator+(Complex lhs, double rhs);
 
 #endif
