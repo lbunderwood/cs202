@@ -7,11 +7,7 @@
 class Cart
 {
 public:
-	Cart() : fruitQty_{ 0 }, meatQty_{ 0 } 
-	{
-		fruitPrice_ = 2.49;
-		meatPrice_ = 5.99;
-	}
+	Cart() : fruitQty_{ 0 }, meatQty_{ 0 } {}
 
 	static void setPrices(double fruit, double meat)
 	{
@@ -30,10 +26,12 @@ public:
 
 	void printCost()
 	{
-		static int count = 1;
+		static int count = 0;
 		count++;
-		std::cout << "Time " << count << " checking cost : $" 
-			<< std::put_money(fruitQty_ * fruitPrice_ + meatQty_ * meatPrice_);
+		std::cout << "Time " << count << " checking cost : $"
+			<< std::fixed << std::setprecision(2) 
+			<< (double)fruitQty_ * fruitPrice_ + (double)meatQty_ * meatPrice_
+			<< std::endl;
 	}
 
 private:
@@ -43,5 +41,8 @@ private:
 	int fruitQty_;
 	int meatQty_;
 };
+
+double Cart::fruitPrice_ = 2.49;
+double Cart::meatPrice_ = 5.99;
 
 #endif
