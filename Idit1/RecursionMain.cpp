@@ -75,28 +75,28 @@ int main(int argc, char** argv)
 	////////////////////////////////////
 
 	Timer factSlowTime;					// start the clock
-	auto factSlow = factorial(n[0]);	// calculate fib the slow way
+	auto factSlow = factorial(n[1]);	// calculate fib the slow way
 	factSlowTime.end();					// stop the clock
 
 	std::cout << "Factorial recursive method complete!" << std::endl;
 
 	Timer factLoopTime;						// start the clock
-	auto factLoop = factorial_loop(n[0]);	// calculate fib the slow way
+	auto factLoop = factorial_loop(n[1]);	// calculate fib the slow way
 	factLoopTime.end();						// stop the clock
 
 	std::cout << "Factorial loop method complete!" << std::endl;
 
 	// output all this garbage
-	std::cout << "For term " << n[0] << ",\n"
+	std::cout << "\nFor term " << n[0] << ",\n"
 		<< "Slow Recursive Fibonacci produced: " << fibSlow
 		<< " In " << fibSlowTime.getDuration() << "s.\n"
 		<< "Fast Recursive Fibonacci produced: " << fibFast.first
 		<< " In " << fibFastTime.getDuration() << "s.\n"
 		<< "Non-Recursive Fibonacci produced: " << fibLoop
-		<< " In " << fibLoopTime.getDuration() << "s.\n"
+		<< " In " << fibLoopTime.getDuration() << "s.\n\n"
+		<< "For term " << n[1] << ",\n"
 		<< "Recursive Factorial produced: " << factSlow
 		<< " In " << factSlowTime.getDuration() << "s.\n"
 		<< "Non-Recursive Factorial produced: " << factLoop
-		<< " In " << factLoopTime.getDuration() << "s.\n"
-		<< "For A( " << n[1] << ", " << n[2] << " ),\n";
+		<< " In " << factLoopTime.getDuration() << "s.\n";
 }
