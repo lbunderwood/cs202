@@ -16,24 +16,29 @@
 
 void inputError()
 {
-	std::cout << "INPUT ERROR: Please enter three integer arguments.\n"
-		"The first will be the term that the fibonacci and factorial are\n"
-		"calculated to, while the second and third will be m and n for the\n"
-		"ackermann's, respectively.";
+	std::cout << "INPUT ERROR: Please enter two integer arguments,\n"
+		"which will be m and n for the ackermann's.";
 }
 
 int main(int argc, char** argv)
 {
 	// get command line input
-	std::pair<int, int> n;
-	if (argc == 2)
+	std::vector<int> n;
+	if (argc == 3)
 	{
-		for 
-		std::istringstream iss(argv[1]);
-		if (!(iss >> n.first))
+		for (int i = 1; i < 3; i++)
 		{
-			inputError();
-			return 0;
+			std::istringstream iss(argv[i]);
+			int num = 0;
+			if (iss >> num)
+			{
+				n.push_back(num);
+			}
+			else
+			{
+				inputError();
+				return 0;
+			}
 		}
 	}
 	else
@@ -47,25 +52,13 @@ int main(int argc, char** argv)
 	////////////////////////////////////
 
 	Timer ackTime;						// start the clock
-	auto ackR = ack(n[1], n[2]);		// calculate fib the slow way
+	auto ackR = ack(n[0], n[1]);		// calculate fib the slow way
 	ackTime.end();						// stop the clock
 
 	std::cout << "Ackermann's complete!" << std::endl << std::endl;
 
 	// output all this garbage
-	std::cout << "For term " << n[0] << ",\n"
-		<< "Slow Recursive Fibonacci produced: " << fibSlow
-		<< " In " << fibSlowTime.getDuration() << "s.\n"
-		<< "Fast Recursive Fibonacci produced: " << fibFast.first
-		<< " In " << fibFastTime.getDuration() << "s.\n"
-		<< "Non-Recursive Fibonacci produced: " << fibLoop
-		<< " In " << fibLoopTime.getDuration() << "s.\n"
-		<< "Recursive Factorial produced: " << factSlow
-		<< " In " << factSlowTime.getDuration() << "s.\n"
-		<< "Non-Recursive Factorial produced: " << factLoop
-		<< " In " << factLoopTime.getDuration() << "s.\n"
-		<< "For A( " << n[1] << ", " << n[2] << " ),\n"
+	std::cout << "For n = " << n[0] << ", m = " << n[1] << ",\n"
 		<< "Recursive Ackermann's produced: " << ackR
-		<< " In " << ackTime.getDuration() << "s.\n";
-		
+		<< " In " << ackTime.getDuration() << "s.\n";		
 }
