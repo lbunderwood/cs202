@@ -9,18 +9,17 @@
 #ifndef CITYNODE_H
 #define CITYNODE_H
 
-#include
-
 class CityNode
 {
 public:
 
 	CityNode();
+	CityNode(int num, double latitude, double longitude);
 	~CityNode();
 
 private:
 
-	size_t NodeNum_;
+	size_t nodeNum_;
 	double latitude_;
 	double longitude_;
 	double graphX_;
