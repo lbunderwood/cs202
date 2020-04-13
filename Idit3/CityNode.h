@@ -9,6 +9,8 @@
 #ifndef CITYNODE_H
 #define CITYNODE_H
 
+#include<utility>
+
 class CityNode
 {
 public:
@@ -16,6 +18,8 @@ public:
 	CityNode();
 	CityNode(int num, double latitude, double longitude);
 	~CityNode();
+
+	std::pair<double, double> getCoords() const;
 
 private:
 

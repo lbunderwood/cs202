@@ -19,7 +19,9 @@ CityNode::CityNode()
 CityNode::CityNode(int num, double latitude, double longitude)
 	: nodeNum_( num ), latitude_(latitude), longitude_(longitude), graphX_(0), graphY_(0) {}
 
-CityNode::~CityNode()
-{
+CityNode::~CityNode() {}
 
+std::pair<double, double> CityNode::getCoords() const
+{
+	return std::pair<double, double>(latitude_, longitude_);
 }
