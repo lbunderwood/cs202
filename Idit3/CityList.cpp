@@ -17,13 +17,13 @@ CityList::CityList() {}
 CityList::~CityList() {}
 
 // function to print an error message
-void readError(std::string filename)
+void readError(const std::string& filename)
 {
 	std::cout << "ERROR READING FILE " << filename << std::endl;
 }
 
 // Reads in given file and populates list_
-void CityList::readFile(std::string filename)
+void CityList::readFile(const std::string& filename)
 {
 	// initialize a filestream and a string to take input
 	std::ifstream ifs(filename);
@@ -68,4 +68,16 @@ void CityList::readFile(std::string filename)
 
 	// check that we exited the loop for the right reason
 	if (token != "EOF") readError(filename);
+}
+
+// Returns the distance between two nodes
+double CityList::distance(int node1, int node2) const
+{
+	// return sqrt((x2-x1)^2 + (y2-y1)^2) = euclidian distance
+	return sqrt(
+		pow(list_[node2].getCoords().first 
+			- list_[node1].getCoords().first, 2)
+		+ 
+		pow(list_[node2].getCoords().second 
+			- list_[node1].getCoords().second, 2));
 }

@@ -21,8 +21,9 @@ public:
 	~CityList();
 
 	// Reads in given file and populates list_
-	void readFile(std::string fileName);
+	void readFile(const std::string& fileName);
 
+	// Returns the distance between two nodes
 	double distance(int node1, int node2) const;
 
 private:
