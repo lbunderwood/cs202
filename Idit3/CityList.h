@@ -10,6 +10,7 @@
 #define CITYLIST_H
 
 #include <vector>
+#include <string>
 #include "CityNode.h"
 
 class CityList
@@ -18,6 +19,11 @@ public:
 
 	CityList();
 	~CityList();
+
+	// Reads in given file and populates list_
+	void readFile(std::string fileName);
+
+	double distance(int node1, int node2) const;
 
 private:
 
