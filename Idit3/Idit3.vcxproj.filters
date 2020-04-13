@@ -18,9 +18,15 @@
     <ClCompile Include="CityNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CityList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CityNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CityList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

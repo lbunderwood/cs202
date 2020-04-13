@@ -123,9 +123,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CityList.cpp" />
     <ClCompile Include="CityNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CityList.h" />
     <ClInclude Include="CityNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
