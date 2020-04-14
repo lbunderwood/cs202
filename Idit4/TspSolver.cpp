@@ -142,14 +142,42 @@ void TspSolver::solveMinWeghtTree()
 
 	std::vector<std::pair<int, int>> edgeVec;
 	std::vector<int> degree(cityVec.size(), 0);
+	std::vector<int> set(cityVec.size(), -1);
 
 	while (cityMap.size() > 0)
 	{
-		if (degree[cityMap.begin()->second.first] < 2 && degree[cityMap.begin()->second.second] < 2)
+		int first = cityMap.begin()->second.first;
+		int second = cityMap.begin()->second.second;
+		if (degree[first] < 2 && degree[second] < 2
+			&& (set[first] != set[second] || set[first] == -1))
 		{
 			edgeVec.push_back({ cityMap.begin()->second });
-			degree[cityMap.begin()->second.first]++;
-			degree[cityMap.begin()->second.second]++;
+			degree[first]++;
+			degree[second]++;
+			if (set[first] == -1 && set[second] == -1)
+			{
+				set[first] = first;
+				set[second] = first;
+			} 
+			else if (set[first] == -1 && set[second] != -1)
+			{
+				set[first] = set[second];
+			}
+			else if (set[first] != -1 && set[second] == -1)
+			{
+				set[second] = set[first];
+			}
+			else
+			{
+				int setToChange = set[second];
+				for (auto n : set)
+				{
+					if (n = setToChange)
+					{
+						n = set[first];
+					}
+				}
+			}
 		}
 		cityMap.erase(cityMap.begin());
 	}
@@ -165,14 +193,14 @@ void TspSolver::solveMinWeghtTree()
 			{
 				path.push_back(edgeVec[i].second);
 				currentCity = edgeVec[i].second;
-				edgeVec.erase(edgeVec.begin + i);
+				edgeVec.erase(edgeVec.begin() + i);
 				break;
 			}
 			else if (edgeVec[i].second == currentCity)
 			{
 				path.push_back(edgeVec[i].first);
 				currentCity = edgeVec[i].first;
-				edgeVec.erase(edgeVec.begin + i);
+				edgeVec.erase(edgeVec.begin() + i);
 				break;
 			}
 		}
