@@ -12,6 +12,8 @@
 #include "CityList.h"
 #include "CityPath.h"
 
+#include<random>
+
 class TspSolver
 {
 public:
@@ -22,12 +24,14 @@ public:
 	CityPath solveGreedy(int start) const;
 	void bestGreedy();
 
-	CityPath solveRandom(int start, std::mt19937 gen) const;
+	CityPath solveRandom(int start, std::mt19937& gen) const;
 	void bestRandom();
 
 	void solveMinWeghtTree();
 
 	void readFile(std::string filename);
+
+	void print();
 
 private:
 

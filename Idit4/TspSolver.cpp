@@ -11,6 +11,8 @@
 #include<random>
 #include<vector>
 #include<map>
+#include<iostream>
+#include<iomanip>
 
 TspSolver::TspSolver() {}
 
@@ -79,7 +81,7 @@ void TspSolver::bestGreedy()
 	totalDistances_.push_back(shortestDist);
 }
 
-CityPath TspSolver::solveRandom(int start, std::mt19937 gen) const
+CityPath TspSolver::solveRandom(int start, std::mt19937& gen) const
 {
 	std::vector<int> unconnected;
 	for (int i = 1; i <= cities_.size(); i++)
@@ -185,4 +187,19 @@ void TspSolver::solveMinWeghtTree()
 void TspSolver::readFile(std::string filename)
 {
 	cities_.readFile(filename);
+}
+
+void TspSolver::print()
+{
+	for (int i = 0; i < paths_.size(); i++)
+	{
+		std::cout << "Path " << i + 1 << ": " << std::endl;
+		for (auto n : paths_[i].getPath())
+		{
+			std::cout << n << " - ";
+		}
+
+		std::cout << "\n\n\tDistance = " << std::setw(7) << totalDistances_[i]
+			<< "\n\n---------------------------------------------------\n\n";
+	}
 }
