@@ -73,8 +73,14 @@ void CityList::readFile(const std::string& filename)
 // Returns the distance between two nodes
 double CityList::distance(int node1, int node2) const
 {
+	// check that node numbers are good
+	if (node1 >= list_.size() || node1 < 0 
+		|| node2 >= list_.size() || node2 < 0
+		|| node1 == node2)
+		return 0;
+
 	// return sqrt((x2-x1)^2 + (y2-y1)^2) = euclidian distance
-	return sqrt(
+	else return sqrt(
 		pow(list_[node2].getCoords().first 
 			- list_[node1].getCoords().first, 2)
 		+ 
