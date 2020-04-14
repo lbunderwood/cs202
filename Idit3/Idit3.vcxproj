@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="CityList.cpp" />
     <ClCompile Include="CityNode.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CityList.h" />
