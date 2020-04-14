@@ -40,34 +40,52 @@ void CityList::readFile(const std::string& filename)
 	}
 
 	// initialize a vector to accept the relevant data, and a counter
-	std::vector<int> info(3);
+	std::vector<double> info(3);
 	int count = 0;
 
 	// Cycle through until we hit the handy EOF that was placed at the end
 	while (ifs >> token && token != "EOF")
 	{
-		// convert string to int, checking that it worked
-		std::istringstream iss(token);
-		if (iss >> info[count])
+		// put data in info, checking for scientific notation and errors
+		if (token.size() > 7 && token.substr(7, 2) == "e+")
 		{
-			// if we've reached the appropriate ammount of data, create node
-			if (count == 2)
+			std::istringstream iss1(token.substr(0, 7));
+			std::istringstream iss2(token.substr(9, 2));
+			int exp;
+			if (iss1 >> info[count] && iss2 >> exp)
 			{
-				list_.push_back(CityNode(info[0], info[1], info[2]));
-				count = 0;
+				info[count] *= pow(10, exp);
 			}
-			// otherwise, increase count
-			else count++;
+			else
+			{
+				readError(filename);
+				return;
+			}
 		}
 		else
 		{
-			readError(filename);
-			return;
+			std::istringstream iss(token);
+			if (!(iss >> info[count]))
+			{
+				readError(filename);
+				return;
+			}
 		}
+
+		// if we've reached the appropriate ammount of data, create node
+		if (count == 2)
+		{
+			list_.push_back(CityNode(info[0], info[1], info[2]));
+			count = 0;
+		}
+		// otherwise, increase count
+		else count++;
+		
 	}
 
 	// check that we exited the loop for the right reason
-	if (token != "EOF") readError(filename);
+	if (token != "EOF") 
+		readError(filename);
 }
 
 // Returns the distance between two nodes
