@@ -87,3 +87,15 @@ double CityList::distance(int node1, int node2) const
 		pow(list_[node2].getCoords().second 
 			- list_[node1].getCoords().second, 2));
 }
+
+// returns list
+std::vector<CityNode> CityList::getList() const
+{
+	return list_;
+}
+
+// returns a node from the list
+CityNode CityList::getNode(int node) const
+{
+	return list_[node];
+}

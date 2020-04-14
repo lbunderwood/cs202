@@ -26,6 +26,12 @@ public:
 	// Returns the distance between two nodes
 	double distance(int node1, int node2) const;
 
+	// returns list
+	std::vector<CityNode> getList() const;
+
+	// returns a node from the list
+	CityNode getNode(int node) const;
+
 private:
 
 	std::vector<CityNode> list_;
