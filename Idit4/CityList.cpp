@@ -108,6 +108,18 @@ double CityList::distance(int node1, int node2) const
 			- list_[node1].getCoords().second, 2));
 }
 
+// returns the total distance for a given path
+double CityList::distance(const CityPath& path) const
+{
+	double total = 0;
+	auto pathVec = path.getPath();
+	for (int i = 1; i < path.size(); i++)
+	{
+		total += distance(pathVec[i], pathVec[i - 1]);
+	}
+	return total;
+}
+
 // returns list
 std::vector<CityNode> CityList::getList() const
 {

@@ -14,6 +14,7 @@
 #include <vector>
 #include <string>
 #include "CityNode.h"
+#include "CityPath.h"
 
 class CityList
 {
@@ -27,6 +28,9 @@ public:
 
 	// Returns the distance between two nodes
 	double distance(int node1, int node2) const;
+
+	// returns the total distance for a given path
+	double distance(const CityPath& path) const;
 
 	// returns list
 	std::vector<CityNode> getList() const;
