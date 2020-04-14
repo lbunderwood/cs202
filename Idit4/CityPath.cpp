@@ -15,3 +15,17 @@ CityPath::CityPath(std::vector<int> path)
 
 CityPath::~CityPath() {}
 
+void CityPath::push_back(int cityNum)
+{
+	path_.push_back(cityNum);
+}
+
+int CityPath::getCity(int pathPos) const
+{
+	return path_[pathPos];
+}
+
+std::vector<int> CityPath::getPath() const
+{
+	return path_;
+}

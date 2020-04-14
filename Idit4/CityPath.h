@@ -19,6 +19,12 @@ public:
 	CityPath(std::vector<int> path);
 	~CityPath();
 
+	void push_back(int cityNum);
+
+	int getCity(int pathPos) const;
+
+	std::vector<int> getPath() const;
+
 private:
 
 	std::vector<int> path_;
