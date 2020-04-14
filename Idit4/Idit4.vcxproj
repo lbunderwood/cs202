@@ -123,6 +123,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CityList.h" />
+    <ClInclude Include="CityNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CityList.cpp" />
+    <ClCompile Include="CityNode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
