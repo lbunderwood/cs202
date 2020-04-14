@@ -19,10 +19,11 @@ public:
 	TspSolver();
 	~TspSolver();
 
-	CityPath solveGreedy(int start);
+	CityPath solveGreedy(int start) const;
 	void bestGreedy();
 
-	void solveRandom();
+	CityPath solveRandom(int start, std::uniform_int_distribution<>& distrib) const;
+	void bestRandom();
 
 	void solveMinWeghtTree();
 

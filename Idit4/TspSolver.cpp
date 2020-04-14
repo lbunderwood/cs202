@@ -8,11 +8,14 @@
 
 #include "TspSolver.h"
 
+#include<random>
+#include<vector>
+
 TspSolver::TspSolver() {}
 
 TspSolver::~TspSolver() {}
 
-CityPath TspSolver::solveGreedy(int start)
+CityPath TspSolver::solveGreedy(int start) const
 {
 	std::vector<int> unconnected;
 	for (int i = 1; i <= cities_.size(); i++)
@@ -75,9 +78,31 @@ void TspSolver::bestGreedy()
 	totalDistances_.push_back(shortestDist);
 }
 
-void TspSolver::solveRandom()
+CityPath TspSolver::solveRandom(int start, std::uniform_int_distribution<>& distrib) const
 {
+	
+}
 
+void TspSolver::bestRandom()
+{
+	double shortestDist = 1000000000000;
+	CityPath shortest;
+	std::random_device r;
+	std::mt19937 gen(r());
+	std::uniform_int_distribution<> distrib(0, cities_.size());
+	for (int i = 1; i <= cities_.size(); i++)
+	{
+		CityPath path = solveRandom(i, distrib);
+		double dist = cities_.distance(path);
+		if (dist < shortestDist)
+		{
+			shortest = path;
+			shortestDist = dist;
+		}
+	}
+
+	paths_.push_back(shortest);
+	totalDistances_.push_back(shortestDist);
 }
 
 void TspSolver::solveMinWeghtTree()
