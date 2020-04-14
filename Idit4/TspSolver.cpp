@@ -32,9 +32,10 @@ CityPath TspSolver::solveGreedy(int start)
 		int closeIndex = -1;
 		for (size_t i = 0; i < unconnected.size(); i++)
 		{
-			if (cities_.distance(currentCity, unconnected[i]) < shortest)
+			double dist = cities_.distance(currentCity, unconnected[i]);
+			if (dist < shortest)
 			{
-				shortest = cities_.distance(currentCity, unconnected[i]);
+				shortest = dist;
 				closest = unconnected[i];
 				closeIndex = i;
 			}
@@ -57,20 +58,21 @@ CityPath TspSolver::solveGreedy(int start)
 
 void TspSolver::bestGreedy()
 {
-	double totalDist = 1000000000000;
+	double shortestDist = 1000000000000;
 	CityPath shortest;
 	for (int i = 1; i <= cities_.size(); i++)
 	{
 		CityPath path = solveGreedy(i);
-		if (cities_.distance(path) < totalDist)
+		double dist = cities_.distance(path);
+		if (dist < shortestDist)
 		{
 			shortest = path;
-			totalDist = cities_.distance(path);
+			shortestDist = dist;
 		}
 	}
 
 	paths_.push_back(shortest);
-	totalDistances_.push_back(totalDist);
+	totalDistances_.push_back(shortestDist);
 }
 
 void TspSolver::solveRandom()
