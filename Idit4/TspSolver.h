@@ -31,7 +31,7 @@ private:
 	CityList cities_;
 
 	std::vector<CityPath> paths_;
-	std::vector<double> totalDistances;
+	std::vector<double> totalDistances_;
 
 };
 

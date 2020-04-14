@@ -39,17 +39,38 @@ CityPath TspSolver::solveGreedy(int start)
 				closeIndex = i;
 			}
 		}
+
+		if (closest == -1 || closeIndex == -1)
+		{
+			throw;
+		}
+
 		unconnected.erase(unconnected.begin() + closeIndex);
 		path.push_back(closest);
 		currentCity = closest;
 	}
+
+	path.push_back(start);
 
 	return path;
 }
 
 void TspSolver::bestGreedy()
 {
+	double totalDist = 1000000000000;
+	CityPath shortest;
+	for (int i = 1; i <= cities_.size(); i++)
+	{
+		CityPath path = solveGreedy(i);
+		if (cities_.distance(path) < totalDist)
+		{
+			shortest = path;
+			totalDist = cities_.distance(path);
+		}
+	}
 
+	paths_.push_back(shortest);
+	totalDistances_.push_back(totalDist);
 }
 
 void TspSolver::solveRandom()
