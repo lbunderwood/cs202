@@ -34,6 +34,8 @@ public:
 	// returns a node from the list
 	CityNode getNode(int node) const;
 
+	size_t size() const;
+
 private:
 
 	std::vector<CityNode> list_;

@@ -13,6 +13,14 @@ CityPath::CityPath() {}
 CityPath::CityPath(std::vector<int> path)
 	: path_(path) {}
 
+CityPath::CityPath(int length)
+{
+	for (int i = 1; i <= length; i++)
+	{
+		path_.push_back(i);
+	}
+}
+
 CityPath::~CityPath() {}
 
 void CityPath::push_back(int cityNum)
@@ -28,4 +36,9 @@ int CityPath::getCity(int pathPos) const
 std::vector<int> CityPath::getPath() const
 {
 	return path_;
+}
+
+size_t CityPath::size() const
+{
+	return path_.size();
 }

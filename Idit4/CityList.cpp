@@ -119,3 +119,8 @@ CityNode CityList::getNode(int node) const
 {
 	return list_[node];
 }
+
+size_t CityList::size() const
+{
+	return list_.size();
+}
