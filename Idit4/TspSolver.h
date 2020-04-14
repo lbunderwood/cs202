@@ -22,7 +22,7 @@ public:
 	CityPath solveGreedy(int start) const;
 	void bestGreedy();
 
-	CityPath solveRandom(int start, std::uniform_int_distribution<>& distrib) const;
+	CityPath solveRandom(int start, std::mt19937& gen) const;
 	void bestRandom();
 
 	void solveMinWeghtTree();
