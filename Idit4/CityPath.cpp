@@ -2,7 +2,7 @@
 // 4/13/2020
 // cs202
 // TSPLIB 2
-// Iditarod #3
+// Iditarod #4
 // CityPath.cpp
 // CityPath class implementation
 

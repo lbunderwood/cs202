@@ -21,7 +21,7 @@ public:
 
 private:
 
-	std::vector<int> path_
+	std::vector<int> path_;
 
 };
 
