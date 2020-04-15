@@ -20,6 +20,7 @@ void run(std::string filename)
 
 int main()
 {
+	run("L0009.tsp");
 	run("pr1002.tsp");
 	run("pcb1173.tsp");
 	run("vm1748.tsp");
