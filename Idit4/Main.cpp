@@ -15,7 +15,7 @@ void run(std::string filename)
 	solver.bestRandom();
 	solver.bestGreedy();
 	solver.solveMinWeghtTree();
-	solver.print();
+	solver.print(filename);
 }
 
 int main()

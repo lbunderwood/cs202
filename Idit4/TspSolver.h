@@ -31,7 +31,7 @@ public:
 
 	void readFile(std::string filename);
 
-	void print();
+	void print(std::string filename);
 
 private:
 

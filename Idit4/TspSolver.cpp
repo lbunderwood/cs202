@@ -10,7 +10,7 @@
 
 #include<random>
 #include<vector>
-#include<map>
+#include<queue>
 #include<iostream>
 #include<iomanip>
 
@@ -127,16 +127,30 @@ void TspSolver::bestRandom()
 	totalDistances_.push_back(shortestDist);
 }
 
+struct Edge
+{
+	double dist;
+	int city1;
+	int city2;
+
+	Edge(double d, int c1, int c2) : dist(d), city1(c1), city2(c2) {}
+};
+
+
 void TspSolver::solveMinWeghtTree()
 {
-	std::map<double, std::pair<int, int>> cityMap;
+	auto sort = [](Edge edge1, Edge edge2)
+	{
+		return edge1.dist > edge2.dist;
+	};
+	std::priority_queue<Edge, std::vector<Edge>, decltype(sort)> edgeQ(sort);
 	auto cityVec = cities_.getList();
 
 	for (size_t i = 0; i < cityVec.size(); i++)
 	{
 		for (size_t j = i + 1; j < cityVec.size(); j++)
 		{
-			cityMap.insert({ cities_.distance(i, j), {i, j} });
+			edgeQ.push(Edge(cities_.distance(i, j), i, j));
 		}
 	}
 
@@ -144,14 +158,14 @@ void TspSolver::solveMinWeghtTree()
 	std::vector<int> degree(cityVec.size(), 0);
 	std::vector<int> set(cityVec.size(), -1);
 
-	while (cityMap.size() > 0)
+	while (edgeQ.size() > 0)
 	{
-		int first = cityMap.begin()->second.first;
-		int second = cityMap.begin()->second.second;
+		int first = edgeQ.top().city1;
+		int second = edgeQ.top().city2;
 		if (degree[first] < 2 && degree[second] < 2
 			&& (set[first] != set[second] || set[first] == -1))
 		{
-			edgeVec.push_back({ cityMap.begin()->second });
+			edgeVec.push_back({ first, second });
 			degree[first]++;
 			degree[second]++;
 			if (set[first] == -1 && set[second] == -1)
@@ -170,17 +184,40 @@ void TspSolver::solveMinWeghtTree()
 			else
 			{
 				int setToChange = set[second];
-				for (auto n : set)
+				for (auto& n : set)
 				{
-					if (n = setToChange)
+					if (n == setToChange)
 					{
 						n = set[first];
 					}
 				}
 			}
 		}
-		cityMap.erase(cityMap.begin());
+		edgeQ.pop();
 	}
+
+	std::pair<int, int> finaledge{ -1,-1 };
+	for (size_t i = 0; i < degree.size(); i++)
+	{
+		if (degree[i] == 1)
+		{
+			if (finaledge.first == -1)
+			{
+				finaledge.first = i;
+			}
+			else if (finaledge.second == -1)
+			{
+				finaledge.second = i;
+			}
+			else
+			{
+				throw;
+			}
+		}
+	}
+
+	if (finaledge.first == -1 || finaledge.second == -1) throw;
+	else edgeVec.push_back(finaledge);
 
 	CityPath path;
 	path.push_back(1);
@@ -217,11 +254,11 @@ void TspSolver::readFile(std::string filename)
 	cities_.readFile(filename);
 }
 
-void TspSolver::print()
+void TspSolver::print(std::string filename)
 {
 	for (int i = 0; i < paths_.size(); i++)
 	{
-		std::cout << "Path " << i + 1 << ": " << std::endl;
+		std::cout << filename << " path " << i + 1 << ": " << std::endl;
 		for (auto n : paths_[i].getPath())
 		{
 			std::cout << n << " - ";
