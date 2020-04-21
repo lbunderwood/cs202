@@ -6,6 +6,8 @@
 // Main.cpp
 // Contains main function
 
+// Modified 4/20/2020 for Iditarod 5
+
 #include "TspSolver.h"
 
 int main()

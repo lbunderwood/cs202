@@ -6,6 +6,8 @@
 // TspSolver.cpp
 // TspSolver class implementation
 
+// Modified 4/20/2020 for Iditarod 5
+
 #include "TspSolver.h"
 
 #include<random>

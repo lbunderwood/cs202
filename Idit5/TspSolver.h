@@ -6,6 +6,8 @@
 // TspSolver.h
 // TspSolver class header
 
+// Modified 4/20/2020 for Iditarod 5
+
 #ifndef TSPSOLVER_H
 #define TSPSOLVER_H
 
