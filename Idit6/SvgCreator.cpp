@@ -14,10 +14,9 @@ SvgCreator::SvgCreator(std::string file) :
 	headerHeight_{ 100 }, height_{ 1500 + headerHeight_ }, 
 	width_{ 2000 }, borderWidth_{ 50 }, scale_{10}, tspFilename_{ file } {}
 
-void SvgCreator::drawCities(std::ofstream& ofs)
+void SvgCreator::drawCities(std::ofstream& ofs, const CityList& list)
 {
-	auto cityList = solver_.getCities();
-	auto cityVec = cityList.getList();
+	auto cityVec = list.getList();
 
 	int citySize = 10;
 

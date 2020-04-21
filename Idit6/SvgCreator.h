@@ -11,6 +11,8 @@
 
 #include "TspSolver.h"
 #include <fstream>
+#include <string>
+#include <vector>
 
 class SvgCreator
 {
@@ -18,11 +20,11 @@ public:
 
 	SvgCreator(std::string file);
 
-	void drawCities(std::ofstream& ofs);
+	void drawCities(std::ofstream& ofs, const CityList& list);
 
-	void drawPath(std::ofstream& ofs, int pathNum);
+	void drawPath(std::ofstream& ofs, const CityList& list, const CityPath& path);
 
-	void draw(const std::string& filename, int pathNum);
+	void draw(const std::string& filename, const CityList& list, const CityPath& path);
 
 	void run();
 
