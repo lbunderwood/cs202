@@ -23,7 +23,7 @@ TspSolver::~TspSolver() {}
 CityPath TspSolver::solveGreedy(int start) const
 {
 	std::vector<int> unconnected;
-	for (int i = 1; i <= cities_.size(); i++)
+	for (int i = 0; i < cities_.size(); i++)
 	{
 		if (i != start) unconnected.push_back(i);
 	}
@@ -68,7 +68,7 @@ void TspSolver::bestGreedy()
 {
 	double shortestDist = 1000000000000;
 	CityPath shortest;
-	for (int i = 1; i <= cities_.size(); i++)
+	for (int i = 0; i < cities_.size(); i++)
 	{
 		CityPath path = solveGreedy(i);
 		double dist = cities_.distance(path);
@@ -86,7 +86,7 @@ void TspSolver::bestGreedy()
 CityPath TspSolver::solveRandom(int start, std::mt19937& gen) const
 {
 	std::vector<int> unconnected;
-	for (int i = 1; i <= cities_.size(); i++)
+	for (int i = 0; i < cities_.size(); i++)
 	{
 		if (i != start) unconnected.push_back(i);
 	}
@@ -114,7 +114,7 @@ void TspSolver::bestRandom()
 	CityPath shortest;
 	std::random_device r;
 	std::mt19937 gen(r());
-	for (int i = 1; i <= cities_.size(); i++)
+	for (int i = 0; i < cities_.size(); i++)
 	{
 		CityPath path = solveRandom(i, gen);
 		double dist = cities_.distance(path);

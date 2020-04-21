@@ -35,6 +35,7 @@ private:
 	int height_;
 	int width_;
 	int borderWidth_;
+	int scale_;
 
 };
 

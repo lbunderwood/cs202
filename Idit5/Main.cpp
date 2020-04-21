@@ -12,6 +12,6 @@
 
 int main()
 {
-	SvgCreator create("pr1002.tsp");
+	SvgCreator create("L0009.tsp");
 	create.run();
 }

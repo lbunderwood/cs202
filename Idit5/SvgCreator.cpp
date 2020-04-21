@@ -11,21 +11,21 @@
 #include <iostream>
 
 SvgCreator::SvgCreator(std::string file) : 
-	headerHeight_{ 1000 }, height_{ 15000 + headerHeight_ }, 
-	width_{ 20000 }, borderWidth_{ 100 }, tspFilename_{ file } {}
+	headerHeight_{ 100 }, height_{ 1500 + headerHeight_ }, 
+	width_{ 2000 }, borderWidth_{ 50 }, scale_{10}, tspFilename_{ file } {}
 
 void SvgCreator::drawCities(std::ofstream& ofs)
 {
 	auto cityList = solver_.getCities();
 	auto cityVec = cityList.getList();
 
-	int citySize = 20;
+	int citySize = 10;
 
 	for (auto n : cityVec)
 	{
-		ofs << "<circle cx=\"" << n.getCoords.first + borderWidth_
-			<< "\" cy=\"" << n.getCoords.second + headerHeight_ + borderWidth_
-			<< "\" r=\"" << citySize << "\"/>" << std::endl;
+		ofs << "<circle cx=\"" << n.getCoords().first / scale_ + borderWidth_
+			<< "\" cy=\"" << n.getCoords().second / scale_ + headerHeight_ + borderWidth_
+			<< "\" r=\"" << citySize << "\" fill=\"red\"/>" << std::endl;
 	}
 }
 
@@ -40,11 +40,11 @@ void SvgCreator::drawPath(std::ofstream& ofs, int pathNum)
 
 	for (auto n : paths[pathNum].getPath())
 	{
-		ofs << cityVec[n].getCoords.first + borderWidth_ << ", "
-			<< cityVec[n].getCoords.second + headerHeight_ + borderWidth_ << " ";
+		ofs << cityVec[n].getCoords().first / scale_ + borderWidth_ << ", "
+			<< cityVec[n].getCoords().second / scale_ + headerHeight_ + borderWidth_ << " ";
 	}
 
-	ofs << "\"/>" << std::endl;
+	ofs << "\" stroke=\"blue\" fill=\"transparent\" stroke-width=\"5\"/>" << std::endl;
 }
 
 
@@ -54,10 +54,10 @@ void SvgCreator::draw(const std::string& filename, int pathNum)
 
 	ofs << "<svg version=\"1.1\" baseProfile = \"full\" \n"
 		"width = \"" << width_ << "\" height = \"" << height_ << "\" \n"
-		"xmlns = \"http://www.w3.org/2000/svg\">";
+		"xmlns = \"http://www.w3.org/2000/svg\">" << std::endl;
 
-	drawCities(ofs);
 	drawPath(ofs, pathNum);
+	drawCities(ofs);
 
 	ofs << "</svg>";
 }
