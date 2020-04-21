@@ -28,17 +28,19 @@ void SvgCreator::drawCities(std::ofstream& ofs)
 	}
 }
 
-void SvgCreator::drawPath(std::ofstream& ofs)
+void SvgCreator::drawPath(std::ofstream& ofs, int pathNum)
 {
 	auto cityList = solver_.getCities();
 	auto cityVec = cityList.getList();
+	auto paths = solver_.getPaths();
+
 
 	ofs << "<polyline points=\"";
 
-	for (auto n : cityVec)
+	for (auto n : paths[pathNum].getPath())
 	{
-		ofs << n.getCoords.first + borderWidth_ << ", "
-			<< n.getCoords.second + headerHeight_ + borderWidth_ << " ";
+		ofs << cityVec[n].getCoords.first + borderWidth_ << ", "
+			<< cityVec[n].getCoords.second + headerHeight_ + borderWidth_ << " ";
 	}
 
 	ofs << "\"/>" << std::endl;
@@ -50,11 +52,11 @@ void SvgCreator::draw(const std::string& filename, int pathNum)
 	std::ofstream ofs(filename);
 
 	ofs << "<svg version=\"1.1\" baseProfile = \"full\" \n"
-		"width = \"300\" height = \"200\" \n"
+		"width = \"" << width_ << "\" height = \"" << height_ << "\" \n"
 		"xmlns = \"http://www.w3.org/2000/svg\">";
 
 	drawCities(ofs);
-	drawPath(ofs);
+	drawPath(ofs, pathNum);
 
 	ofs << "</svg>";
 }

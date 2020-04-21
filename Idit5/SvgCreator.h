@@ -20,7 +20,7 @@ public:
 
 	void drawCities(std::ofstream& ofs);
 
-	void drawPath(std::ofstream& ofs);
+	void drawPath(std::ofstream& ofs, int pathNum);
 
 	void draw(const std::string& filename, int pathNum);
 
