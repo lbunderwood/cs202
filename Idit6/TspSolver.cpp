@@ -116,7 +116,7 @@ CityPath TspSolver::solveRandom(int start, std::mt19937& gen)
 	path.push_back(start);
 
 	timers[0].end();
-	creator_.draw("Greedy0.svg", cities_, path, timers[0].getDuration());
+	creator_.draw("Random0.svg", cities_, path, timers[0].getDuration());
 
 	int cityCount = 0;
 	int drawCount = 1;
@@ -131,7 +131,7 @@ CityPath TspSolver::solveRandom(int start, std::mt19937& gen)
 
 		if (cityCount == floor(cities_.size() / 20))
 		{
-			std::string name = "Greedy" + std::to_string(drawCount) + ".svg";
+			std::string name = "Random" + std::to_string(drawCount) + ".svg";
 			timers[drawCount].end();
 			creator_.draw(name, cities_, path, timers[drawCount].getDuration());
 			drawCount++;
@@ -201,7 +201,7 @@ void TspSolver::solveMinWeightTree()
 	std::vector<int> set(cityVec.size(), -1);
 
 	timers[0].end();
-	creator_.draw("Greedy0.svg", cities_, path, timers[0].getDuration());
+	creator_.draw("Custom0.svg", cities_, path, timers[0].getDuration());
 
 	while (edgeQ.size() > 0)
 	{
@@ -265,7 +265,7 @@ void TspSolver::solveMinWeightTree()
 	else edgeVec.push_back(finaledge);
 
 	timers[1].end();
-	creator_.draw("Greedy1.svg", cities_, path, timers[1].getDuration());
+	creator_.draw("Custom1.svg", cities_, path, timers[1].getDuration());
 
 	path.push_back(1);
 	int currentCity = 1;
@@ -293,7 +293,7 @@ void TspSolver::solveMinWeightTree()
 
 		if (cityCount == floor(cities_.size() / 20))
 		{
-			std::string name = "Greedy" + std::to_string(drawCount) + ".svg";
+			std::string name = "Custom" + std::to_string(drawCount) + ".svg";
 			timers[drawCount].end();
 			creator_.draw(name, cities_, path, timers[drawCount].getDuration());
 			drawCount++;

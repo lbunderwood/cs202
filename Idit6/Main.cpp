@@ -8,10 +8,11 @@
 
 // Modified 4/20/2020 for Iditarod 5
 
-#include "SvgCreator.h"
-
+#include "TspSolver.h"
+#pragma comment(lib, "Timer.lib")
 int main()
 {
 	TspSolver solver("pr1002.tsp");
+	solver.readFile();
 	solver.solve();
 }

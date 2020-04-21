@@ -9,7 +9,9 @@
 #ifndef SVGCREATOR_H
 #define SVGCREATOR_H
 
-#include "TspSolver.h"
+
+#include "CityList.h"
+#include "CityPath.h"
 #include <fstream>
 #include <string>
 #include <vector>

@@ -18,7 +18,7 @@ void SvgCreator::drawCities(std::ofstream& ofs, const CityList& list)
 {
 	auto cityVec = list.getList();
 
-	int citySize = 10;
+	int citySize = 5;
 
 	for (auto n : cityVec)
 	{
