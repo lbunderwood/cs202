@@ -29,16 +29,13 @@ void SvgCreator::drawCities(std::ofstream& ofs, const CityList& list)
 	}
 }
 
-void SvgCreator::drawPath(std::ofstream& ofs, int pathNum)
+void SvgCreator::drawPath(std::ofstream& ofs, const CityList& list, const CityPath& path)
 {
-	auto cityList = solver_.getCities();
-	auto cityVec = cityList.getList();
-	auto paths = solver_.getPaths();
-
+	auto cityVec = list.getList();
 
 	ofs << "<polyline points=\"";
 
-	for (auto n : paths[pathNum].getPath())
+	for (auto n : path.getPath())
 	{
 		ofs << cityVec[n].getCoords().first / scale_ + borderWidth_ 
 			<< ", "
