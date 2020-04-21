@@ -25,10 +25,10 @@ public:
 	TspSolver(std::string file);
 	~TspSolver();
 
-	CityPath solveGreedy(int start) const;
+	CityPath solveGreedy(int start);
 	void bestGreedy();
 
-	CityPath solveRandom(int start, std::mt19937& gen) const;
+	CityPath solveRandom(int start, std::mt19937& gen);
 	void bestRandom();
 
 	void solveMinWeightTree();

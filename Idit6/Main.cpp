@@ -12,6 +12,6 @@
 
 int main()
 {
-	SvgCreator create("pr1002.tsp");
-	create.run();
+	TspSolver solver("pr1002.tsp");
+	solver.solve();
 }
