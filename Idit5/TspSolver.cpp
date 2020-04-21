@@ -137,7 +137,7 @@ struct Edge
 };
 
 
-void TspSolver::solveMinWeghtTree()
+void TspSolver::solveMinWeightTree()
 {
 	auto sort = [](Edge edge1, Edge edge2)
 	{
@@ -277,4 +277,11 @@ CityList TspSolver::getCities()
 std::vector<CityPath> TspSolver::getPaths()
 {
 	return paths_;
+}
+
+void TspSolver::solve()
+{
+	bestRandom();
+	bestGreedy();
+	solveMinWeightTree();
 }

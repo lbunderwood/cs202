@@ -14,7 +14,7 @@ int main()
 	solver.readFile("pr1002.tsp");
 	solver.bestRandom();
 	solver.bestGreedy();
-	solver.solveMinWeghtTree();
+	solver.solveMinWeightTree();
 
 
 }

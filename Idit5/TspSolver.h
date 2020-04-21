@@ -27,7 +27,7 @@ public:
 	CityPath solveRandom(int start, std::mt19937& gen) const;
 	void bestRandom();
 
-	void solveMinWeghtTree();
+	void solveMinWeightTree();
 
 	void readFile(std::string filename);
 
@@ -36,6 +36,8 @@ public:
 	CityList getCities();
 
 	std::vector<CityPath> getPaths();
+
+	void solve();
 
 private:
 
