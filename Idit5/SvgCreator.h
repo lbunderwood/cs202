@@ -20,6 +20,8 @@ public:
 
 	void drawCities(std::ofstream ofs);
 
+	void drawPath(std::ofstream ofs);
+
 private:
 
 	TspSolver solver_;

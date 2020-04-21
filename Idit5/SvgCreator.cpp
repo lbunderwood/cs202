@@ -16,7 +16,6 @@ SvgCreator::SvgCreator() :
 void SvgCreator::drawCities(std::ofstream ofs)
 {
 	auto cityList = solver_.getCities();
-	
 	auto cityVec = cityList.getList();
 
 	int citySize = 20;
@@ -27,5 +26,20 @@ void SvgCreator::drawCities(std::ofstream ofs)
 			<< "\" cy=\"" << n.getCoords.second + headerHeight_ + borderWidth_
 			<< "\" r=\"" << citySize << "\"/>" << std::endl;
 	}
+}
 
+void SvgCreator::drawPath(std::ofstream ofs)
+{
+	auto cityList = solver_.getCities();
+	auto cityVec = cityList.getList();
+
+	ofs << "<polyline points=\"";
+
+	for (auto n : cityVec)
+	{
+		ofs << n.getCoords.first + borderWidth_ << ", "
+			<< n.getCoords.second + headerHeight_ + borderWidth_ << " ";
+	}
+
+	ofs << "\"/>" << std::endl;
 }
