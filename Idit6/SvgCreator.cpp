@@ -43,7 +43,7 @@ void SvgCreator::drawPath(std::ofstream& ofs, const CityList& list, const CityPa
 			+ borderWidth_ << " ";
 	}
 
-	ofs << "\" stroke=\"blue\" fill=\"transparent\" stroke-width=\"5\"/>" 
+	ofs << "\" stroke=\"blue\" fill=\"transparent\" stroke-width=\"3\"/>" 
 		<< std::endl;
 }
 
