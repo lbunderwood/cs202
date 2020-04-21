@@ -289,18 +289,21 @@ void TspSolver::solve()
 	randTime.end();
 	times_.push_back(randTime.getDuration());
 	std::cout << "Random Solve Complete!" << std::endl << std::endl;
+	creator_.draw("RandomComplete.svg", cities_, paths_[0], times_[0]);
 
 	Timer greedyTime;
 	bestGreedy();
 	greedyTime.end();
 	times_.push_back(greedyTime.getDuration());
 	std::cout << "Greedy Solve Complete!" << std::endl << std::endl;
+	creator_.draw("RandomComplete.svg", cities_, paths_[0], times_[0]);
 
 	Timer customTime;
 	solveMinWeightTree();
 	customTime.end();
 	times_.push_back(customTime.getDuration());
 	std::cout << "CustomAlg Solve Complete!" << std::endl << std::endl;
+	creator_.draw("RandomComplete.svg", cities_, paths_[0], times_[0]);
 }
 
 std::vector<double> TspSolver::getDistances()
