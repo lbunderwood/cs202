@@ -17,7 +17,7 @@
 #include<iostream>
 #include<iomanip>
 
-TspSolver::TspSolver() {}
+TspSolver::TspSolver(std::string file) : tspFile_{ file }, creator_(file) {}
 
 TspSolver::~TspSolver() {}
 
@@ -252,16 +252,16 @@ void TspSolver::solveMinWeightTree()
 	totalDistances_.push_back(cities_.distance(path));
 }
 
-void TspSolver::readFile(std::string filename)
+void TspSolver::readFile()
 {
-	cities_.readFile(filename);
+	cities_.readFile(tspFile_);
 }
 
-void TspSolver::print(std::string filename)
+void TspSolver::print()
 {
 	for (int i = 0; i < paths_.size(); i++)
 	{
-		std::cout << filename << " path " << i + 1 << ": " << std::endl;
+		std::cout << tspFile_ << " path " << i + 1 << ": " << std::endl;
 		for (auto n : paths_[i].getPath())
 		{
 			std::cout << n << " - ";
@@ -296,14 +296,14 @@ void TspSolver::solve()
 	greedyTime.end();
 	times_.push_back(greedyTime.getDuration());
 	std::cout << "Greedy Solve Complete!" << std::endl << std::endl;
-	creator_.draw("RandomComplete.svg", cities_, paths_[0], times_[0]);
+	creator_.draw("GreedyComplete.svg", cities_, paths_[1], times_[1]);
 
 	Timer customTime;
 	solveMinWeightTree();
 	customTime.end();
 	times_.push_back(customTime.getDuration());
 	std::cout << "CustomAlg Solve Complete!" << std::endl << std::endl;
-	creator_.draw("RandomComplete.svg", cities_, paths_[0], times_[0]);
+	creator_.draw("CustomComplete.svg", cities_, paths_[2], times_[2]);
 }
 
 std::vector<double> TspSolver::getDistances()

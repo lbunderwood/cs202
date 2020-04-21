@@ -22,7 +22,7 @@ class TspSolver
 {
 public:
 
-	TspSolver();
+	TspSolver(std::string file);
 	~TspSolver();
 
 	CityPath solveGreedy(int start) const;
@@ -33,9 +33,9 @@ public:
 
 	void solveMinWeightTree();
 
-	void readFile(std::string filename);
+	void readFile();
 
-	void print(std::string filename);
+	void print();
 
 	CityList getCities();
 
@@ -48,6 +48,8 @@ public:
 	void solve();
 
 private:
+
+	std::string tspFile_;
 
 	CityList cities_;
 
