@@ -37,6 +37,8 @@ private:
 	int borderWidth_;
 	int scale_;
 
+	std::vector<double> times_;
+
 };
 
 #endif

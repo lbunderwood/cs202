@@ -9,6 +9,7 @@
 // Modified 4/20/2020 for Iditarod 5
 
 #include "TspSolver.h"
+#include "Timer.h"
 
 #include<random>
 #include<vector>
@@ -283,10 +284,31 @@ std::vector<CityPath> TspSolver::getPaths()
 
 void TspSolver::solve()
 {
+	Timer randTime;
 	bestRandom();
+	randTime.end();
+	times_.push_back(randTime.getDuration());
 	std::cout << "Random Solve Complete!" << std::endl << std::endl;
+
+	Timer greedyTime;
 	bestGreedy();
+	greedyTime.end();
+	times_.push_back(greedyTime.getDuration());
 	std::cout << "Greedy Solve Complete!" << std::endl << std::endl;
+
+	Timer customTime;
 	solveMinWeightTree();
+	customTime.end();
+	times_.push_back(customTime.getDuration());
 	std::cout << "CustomAlg Solve Complete!" << std::endl << std::endl;
+}
+
+std::vector<double> TspSolver::getDistances()
+{
+	return totalDistances_;
+}
+
+std::vector<double> TspSolver::getTimes()
+{
+	return times_;
 }

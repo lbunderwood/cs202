@@ -13,6 +13,7 @@
 
 #include "CityList.h"
 #include "CityPath.h"
+#include "Timer.h"
 
 #include<random>
 
@@ -39,6 +40,10 @@ public:
 
 	std::vector<CityPath> getPaths();
 
+	std::vector<double> getDistances();
+
+	std::vector<double> getTimes();
+
 	void solve();
 
 private:
@@ -47,6 +52,7 @@ private:
 
 	std::vector<CityPath> paths_;
 	std::vector<double> totalDistances_;
+	std::vector<double> times_;
 
 };
 
