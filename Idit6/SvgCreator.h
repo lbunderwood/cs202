@@ -24,9 +24,7 @@ public:
 
 	void drawPath(std::ofstream& ofs, const CityList& list, const CityPath& path);
 
-	void draw(const std::string& filename, const CityList& list, const CityPath& path);
-
-	void run();
+	void draw(const std::string& filename, const CityList& list, const CityPath& path, double time);
 
 private:
 
@@ -37,8 +35,6 @@ private:
 	int width_;
 	int borderWidth_;
 	int scale_;
-
-	std::vector<double> times_;
 
 };
 

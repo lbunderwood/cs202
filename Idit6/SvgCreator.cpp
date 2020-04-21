@@ -48,7 +48,7 @@ void SvgCreator::drawPath(std::ofstream& ofs, const CityList& list, const CityPa
 }
 
 
-void SvgCreator::draw(const std::string& filename, int pathNum)
+void SvgCreator::draw(const std::string& filename, const CityList& list, const CityPath& path, double time)
 {
 	std::ofstream ofs(filename);
 
@@ -56,10 +56,6 @@ void SvgCreator::draw(const std::string& filename, int pathNum)
 		"width = \"" << width_ << "\" height = \"" << height_ << "\" \n"
 		"xmlns = \"http://www.w3.org/2000/svg\">" << std::endl;
 
-	auto paths = solver_.getPaths();
-	auto cities = solver_.getCities();
-	auto times = solver_.getTimes();
-	auto distances = solver_.getDistances();
 
 	ofs << "<rect x=\"0\" y=\"0\" width=\"" << width_ << "\" height=\""
 		<< headerHeight_ << "\" fill=\"blue\"/>" << std::endl
@@ -68,28 +64,17 @@ void SvgCreator::draw(const std::string& filename, int pathNum)
 		<< "<text x=\"750\" y=\"70\" font-size=\"80\" fill=\"white\">"
 		<< tspFilename_ << "</text>" << std::endl
 		<< "<text x=\"1300\" y=\"70\" font-size=\"80\" fill=\"white\">"
-		<< solver_.getCities().size() << " - city problem </text>"
+		<< list.size() << " - city problem </text>"
 		<< std::endl
 		<< "<text x=\"50\" y=\"1570\" font-size=\"80\">"
-		<< "Distance = " << distances[pathNum] << "</text>" 
+		<< "Distance = " << list.distance(path) << "</text>" 
 		<< std::endl
 		<< "<text x=\"1000\" y=\"1570\" font-size=\"80\">"
-		<< "Time Elapsed = " << times[pathNum] << "</text>"
+		<< "Time Elapsed = " << time << "</text>"
 		<< std::endl;
 
-	drawPath(ofs, pathNum);
-	drawCities(ofs);
+	drawPath(ofs, list, path);
+	drawCities(ofs, list);
 
 	ofs << "</svg>";
-}
-
-void SvgCreator::run()
-{
-	solver_.readFile(tspFilename_);
-	solver_.solve();
-
-	draw("random.svg", 0);
-	draw("greedy.svg", 1);
-	draw("customAlg.svg", 2);
-	std::cout << "File Creation Complete!" << std::endl;
 }
