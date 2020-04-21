@@ -10,6 +10,7 @@
 #define SVGCREATOR_H
 
 #include "TspSolver.h"
+#include <fstream>
 
 class SvgCreator
 {
@@ -17,12 +18,17 @@ public:
 
 	SvgCreator();
 
+	void drawCities(std::ofstream ofs);
+
 private:
 
 	TspSolver solver_;
+	std::string tspFilename_;
 
+	int headerHeight_;
 	int height_;
 	int width_;
+	int borderWidth_;
 
 };
 
