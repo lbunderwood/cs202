@@ -9,11 +9,20 @@
 #ifndef SVGCREATOR_H
 #define SVGCREATOR_H
 
+#include "TspSolver.h"
+
 class SvgCreator
 {
 public:
 
+	SvgCreator();
+
 private:
+
+	TspSolver solver_;
+
+	int height_;
+	int width_;
 
 };
 

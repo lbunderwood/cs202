@@ -8,3 +8,5 @@
 
 #include "SvgCreator.h"
 
+SvgCreator::SvgCreator() : height_{ 1000 }, width_{ 1000 } {}
+
