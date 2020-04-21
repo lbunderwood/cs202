@@ -8,15 +8,10 @@
 
 // Modified 4/20/2020 for Iditarod 5
 
-#include "TspSolver.h"
+#include "SvgCreator.h"
 
 int main()
 {
-	TspSolver solver;
-	solver.readFile("pr1002.tsp");
-	solver.bestRandom();
-	solver.bestGreedy();
-	solver.solveMinWeightTree();
-
-
+	SvgCreator create("pr1002.tsp");
+	create.run();
 }

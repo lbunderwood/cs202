@@ -8,10 +8,11 @@
 
 #include "SvgCreator.h"
 #include <fstream>
+#include <iostream>
 
-SvgCreator::SvgCreator() : 
+SvgCreator::SvgCreator(std::string file) : 
 	headerHeight_{ 1000 }, height_{ 15000 + headerHeight_ }, 
-	width_{ 20000 }, borderWidth_{ 100 } {}
+	width_{ 20000 }, borderWidth_{ 100 }, tspFilename_{ file } {}
 
 void SvgCreator::drawCities(std::ofstream& ofs)
 {
@@ -59,4 +60,15 @@ void SvgCreator::draw(const std::string& filename, int pathNum)
 	drawPath(ofs, pathNum);
 
 	ofs << "</svg>";
+}
+
+void SvgCreator::run()
+{
+	solver_.readFile(tspFilename_);
+	solver_.solve();
+
+	draw("random1002.svg", 0);
+	draw("greedy1002.svg", 1);
+	draw("customAlg1002.svg", 2);
+	std::cout << "File Creation Complete!" << std::endl;
 }

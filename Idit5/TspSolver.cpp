@@ -284,6 +284,9 @@ std::vector<CityPath> TspSolver::getPaths()
 void TspSolver::solve()
 {
 	bestRandom();
+	std::cout << "Random Solve Complete!" << std::endl << std::endl;
 	bestGreedy();
+	std::cout << "Greedy Solve Complete!" << std::endl << std::endl;
 	solveMinWeightTree();
+	std::cout << "CustomAlg Solve Complete!" << std::endl << std::endl;
 }

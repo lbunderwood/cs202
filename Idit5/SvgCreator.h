@@ -16,13 +16,15 @@ class SvgCreator
 {
 public:
 
-	SvgCreator();
+	SvgCreator(std::string file);
 
 	void drawCities(std::ofstream& ofs);
 
 	void drawPath(std::ofstream& ofs, int pathNum);
 
 	void draw(const std::string& filename, int pathNum);
+
+	void run();
 
 private:
 
