@@ -33,6 +33,8 @@ public:
 
 	void print(std::string filename);
 
+	CityList getCities();
+
 private:
 
 	CityList cities_;

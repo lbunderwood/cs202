@@ -268,3 +268,8 @@ void TspSolver::print(std::string filename)
 			<< "\n\n---------------------------------------------------\n\n";
 	}
 }
+
+CityList TspSolver::getCities()
+{
+	return cities_;
+}
