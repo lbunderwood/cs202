@@ -14,6 +14,7 @@
 #include "CityList.h"
 #include "CityPath.h"
 #include "Timer.h"
+#include "SvgCreator.h"
 
 #include<random>
 
@@ -53,6 +54,8 @@ private:
 	std::vector<CityPath> paths_;
 	std::vector<double> totalDistances_;
 	std::vector<double> times_;
+
+	SvgCreator creator_;
 
 };
 

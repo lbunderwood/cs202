@@ -28,7 +28,6 @@ public:
 
 private:
 
-	TspSolver solver_;
 	std::string tspFilename_;
 
 	int headerHeight_;
