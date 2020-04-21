@@ -13,7 +13,7 @@ SvgCreator::SvgCreator() :
 	headerHeight_{ 1000 }, height_{ 15000 + headerHeight_ }, 
 	width_{ 20000 }, borderWidth_{ 100 } {}
 
-void SvgCreator::drawCities(std::ofstream ofs)
+void SvgCreator::drawCities(std::ofstream& ofs)
 {
 	auto cityList = solver_.getCities();
 	auto cityVec = cityList.getList();
@@ -28,7 +28,7 @@ void SvgCreator::drawCities(std::ofstream ofs)
 	}
 }
 
-void SvgCreator::drawPath(std::ofstream ofs)
+void SvgCreator::drawPath(std::ofstream& ofs)
 {
 	auto cityList = solver_.getCities();
 	auto cityVec = cityList.getList();
@@ -42,4 +42,19 @@ void SvgCreator::drawPath(std::ofstream ofs)
 	}
 
 	ofs << "\"/>" << std::endl;
+}
+
+
+void SvgCreator::draw(const std::string& filename, int pathNum)
+{
+	std::ofstream ofs(filename);
+
+	ofs << "<svg version=\"1.1\" baseProfile = \"full\" \n"
+		"width = \"300\" height = \"200\" \n"
+		"xmlns = \"http://www.w3.org/2000/svg\">";
+
+	drawCities(ofs);
+	drawPath(ofs);
+
+	ofs << "</svg>";
 }

@@ -18,9 +18,11 @@ public:
 
 	SvgCreator();
 
-	void drawCities(std::ofstream ofs);
+	void drawCities(std::ofstream& ofs);
 
-	void drawPath(std::ofstream ofs);
+	void drawPath(std::ofstream& ofs);
+
+	void draw(const std::string& filename, int pathNum);
 
 private:
 
