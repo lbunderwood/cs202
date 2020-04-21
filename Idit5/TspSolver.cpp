@@ -273,3 +273,8 @@ CityList TspSolver::getCities()
 {
 	return cities_;
 }
+
+std::vector<CityPath> TspSolver::getPaths()
+{
+	return paths_;
+}

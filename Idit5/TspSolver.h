@@ -35,6 +35,8 @@ public:
 
 	CityList getCities();
 
+	std::vector<CityPath> getPaths();
+
 private:
 
 	CityList cities_;
