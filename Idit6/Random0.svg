@@ -6,7 +6,7 @@ xmlns = "http://www.w3.org/2000/svg">
 <text x="750" y="70" font-size="80" fill="white">pr1002.tsp</text>
 <text x="1300" y="70" font-size="80" fill="white">1002 - city problem </text>
 <text x="50" y="1570" font-size="80">Distance = 0</text>
-<text x="1000" y="1570" font-size="80">Time Elapsed = 0.000509</text>
+<text x="1000" y="1570" font-size="80">Time Elapsed = 0.0003292</text>
 <polyline points="165, 550 " stroke="blue" fill="transparent" stroke-width="3"/>
 <circle cx="165" cy="550" r="5" fill="red"/>
 <circle cx="155" cy="425" r="5" fill="red"/>
